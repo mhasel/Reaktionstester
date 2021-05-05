@@ -1,0 +1,6 @@
+D:\temp\ReaktionstesterPC\ReaktionstesterPC.cydsn\ReaktionstesterPC.cyprj|a4f22e56-b14a-4716-a431-2a370872a756
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|a52506f3-6961-4f84-81a6-37d3489c15db
+C:\Users\hasel\OneDrive\Dokumente\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|877a897a-9128-4946-9a8b-a616cdad5084
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|22c5a8d1-5e98-4451-947e-462412eabf59
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|da93d6fd-7a1e-4556-a9d1-2527dac2ab33
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|4ac9c4d0-613b-4b2c-9724-402d88e669e3
