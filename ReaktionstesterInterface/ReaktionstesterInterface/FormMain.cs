@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UART_RS232;
@@ -15,9 +16,10 @@ namespace ReaktionstesterInterface
     public partial class FormMain : Form
     {
         private string sBuffer;
-        int iState = -1;
         private FormRS232 oSetupRS232;
         private SerialPort serialPortToPsoC;
+        private CancellationTokenSource oCTS;
+        private Random oRandom;
 
         public FormMain()
         {
@@ -26,6 +28,8 @@ namespace ReaktionstesterInterface
             MaximizeBox = false;
             FormBorderStyle = FormBorderStyle.Fixed3D;
 
+            oCTS = new CancellationTokenSource();
+            oRandom = new Random();
             // SerialPort und Setupform initialisieren und SerialPort object an Konstruktor mitübergeben
             serialPortToPsoC = new SerialPort("COM3", 9600, Parity.None, 8, StopBits.One);
             oSetupRS232 = new FormRS232(serialPortToPsoC);
@@ -36,6 +40,7 @@ namespace ReaktionstesterInterface
         }
 
         private delegate void oDataReceivedDeleg(char cReceived);
+
         #region ----------------------StripMenu---------------------------
         private void toolStripMenuItemSetup_Click(object sender, EventArgs e)
         {
@@ -153,114 +158,116 @@ namespace ReaktionstesterInterface
             if (sBuffer.Length > 100)
             {
                 sBuffer = string.Empty;
-                textBox.AppendText("---Buffer Overflow.Buffer has been reset to avoid memory leakage. Please check sender protocol!---");
             }
 
             sBuffer += cChar;
-            Reaktionstest();
+
+            DisplayResult();
         }
 
-        private void Reaktionstest()
-        {
-            string sCountdown = string.Empty;
-            switch (iState)
+        private void DisplayResult()
+        {            
+            if ((sBuffer.Length > 2) && (sBuffer.Substring(0,2) == "R:") && (sBuffer.Substring(sBuffer.Length - 1) == "|"))   
             {
-                // Warten
-                case -1:
-                    switch (sBuffer)
-                    {
-                        case "T:":
-                            iState = 0;
-                            sBuffer = string.Empty;
-                            break;
-                        case "C:":
-                            iState = 1;
-                            sBuffer = string.Empty;
-                            break;
-                        case "R:":
-                            iState = 2;
-                            sBuffer = string.Empty;
-                            break;
-                    }
-                    break;
+                string sMessage = sBuffer.Substring(2, sBuffer.Length - 3);
 
-                // Text
-                case 0:
-                    if ((sBuffer.Length != 0) && (sBuffer.Substring(sBuffer.Length - 1) == "|"))
-                    {
-                        textBox.AppendText($"{sBuffer.Substring(0, sBuffer.Length - 1)}");
-                        iState = -1;
-                        sBuffer = string.Empty;
-                        textBox.AppendText(Environment.NewLine);
-                    }
-                    
-                    break;
-                
-                // Countdown
-                case 1:
-                    if ((sBuffer.Length != 0) && (sBuffer.Substring(sBuffer.Length - 1) == "|"))
-                    {
-                        sCountdown = $"{sBuffer.Substring(0, 1)}";
-                        if (sCountdown != "^")
+                switch (sMessage)
+                {                    
+                    // Taste gehalten
+                    case "-2":
+                        labelStatus.Text = "Knopf gedrückt halten gilt nicht :)";
+                        break;
+
+                    // Taste nicht gedrückt
+                    case "-1":
+                        labelStatus.Text = "Knopf nicht gedrückt.";
+                        break;
+
+                    // Messung valide
+                    default:
+                        labelStatus.Text = $"Reaktionszeit: {sMessage} ms.";
+                        break;
+                }
+
+                sBuffer = string.Empty;
+                buttonStart.Enabled = true;
+            }
+        }
+
+        private async Task Countdown(CancellationToken oCancellationToken)
+        {
+            foreach (PictureBox oBox in flowLayoutPanel.Controls.OfType<PictureBox>())
+            {
+                oBox.Invoke(new Action(() =>
+                {
+                    oBox.BackColor = Color.Red;
+                }));
+            }
+
+            for (int iCountdown = 3; iCountdown >= 0; iCountdown--)
+            {
+                serialPortToPsoC.Write(iCountdown.ToString());
+                labelStatus.Invoke(new Action(() =>
+                {
+                    labelStatus.Text = $"{iCountdown}";
+                }));
+
+                switch (iCountdown)
+                {
+                    case 2:
+                        pictureBoxCountdown3.Invoke(new Action(() =>
                         {
-                            textBox.AppendText($"{sBuffer.Substring(0, sBuffer.Length - 1)}");
-                        }                 
-                        iState = -1;
-                        sBuffer = string.Empty;
-                        textBox.AppendText(Environment.NewLine);
-                    }
-                    switch (sCountdown)
-                    {
-                        case "^":
-                            pictureBoxCountdown1.BackColor = Color.LimeGreen;
-                            pictureBoxCountdown2.BackColor = Color.LimeGreen;
-                            pictureBoxCountdown3.BackColor = Color.LimeGreen;
-                            break;
-                        case "l":
-                            pictureBoxCountdown1.BackColor = Color.Gray;
-                            break;
-                        case "1":
+                            pictureBoxCountdown3.BackColor = Color.Gray;
+                        }));
+                        break;
+                    case 1:
+                        pictureBoxCountdown2.Invoke(new Action(() =>
+                        {
                             pictureBoxCountdown2.BackColor = Color.Gray;
-                            break;
-                        case "2":
-                            pictureBoxCountdown3.BackColor = Color.Gray;                            
-                            break;
-                        case "3":
-                            pictureBoxCountdown1.BackColor = Color.DarkRed;
-                            pictureBoxCountdown2.BackColor = Color.DarkRed;
-                            pictureBoxCountdown3.BackColor = Color.DarkRed;
-                            break;
-                    }
-                    break;
-
-                // Ergebnis
-                case 2: 
-                    if ((sBuffer.Length != 0) && (sBuffer.Substring(sBuffer.Length - 1) == "|"))
-                    {
-                        textBox.AppendText($"{sBuffer.Substring(0, sBuffer.Length - 1)}");
-                        iState = -1;
-                        sBuffer = string.Empty;
-                        textBox.AppendText(Environment.NewLine);
-                    }
-                    break;
+                        }));
+                        break;
+                    case 0:
+                        pictureBoxCountdown1.Invoke(new Action(() =>
+                        {
+                            pictureBoxCountdown1.BackColor = Color.Gray;
+                        }));
+                        break;
+                }
+                await Task.Delay(1000, oCTS.Token);
             }
-            
 
+            await Task.Delay(1000 + oRandom.Next(1000), oCTS.Token);
+            serialPortToPsoC.Write("g");
+            foreach (PictureBox oBox in flowLayoutPanel.Controls.OfType<PictureBox>())
+            {
+                oBox.Invoke(new Action(() =>
+                {
+                    oBox.BackColor = Color.LimeGreen;
+                }));
+            }
         }
 
-        private void textBox_KeyPress(object sender, KeyPressEventArgs e)
+        private async void buttonStart_Click(object sender, EventArgs e)
         {
-            if (serialPortToPsoC.IsOpen)
+            buttonStart.Enabled = false;            
+
+            try
             {
-                try
+                if (serialPortToPsoC.IsOpen)
                 {
-                    serialPortToPsoC.Write(e.KeyChar.ToString());
+                    serialPortToPsoC.Write("s");
+                    await Task.Run(async () =>
+                    {
+                        await Countdown(oCTS.Token);
+                    });                    
                 }
-                catch
+                else
                 {
-                    // leer
+                    labelStatus.Text = "Port nicht geöffnet.";
+                    buttonStart.Enabled = true;
                 }
             }
+            catch { };
         }
     }
 }

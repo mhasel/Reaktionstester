@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox = new System.Windows.Forms.TextBox();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItemRS232 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemStart = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,6 +39,8 @@
             this.pictureBoxCountdown1 = new System.Windows.Forms.PictureBox();
             this.pictureBoxCountdown2 = new System.Windows.Forms.PictureBox();
             this.pictureBoxCountdown3 = new System.Windows.Forms.PictureBox();
+            this.buttonStart = new System.Windows.Forms.Button();
+            this.labelStatus = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.flowLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCountdown1)).BeginInit();
@@ -47,24 +48,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCountdown3)).BeginInit();
             this.SuspendLayout();
             // 
-            // textBox
-            // 
-            this.textBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBox.Location = new System.Drawing.Point(0, 156);
-            this.textBox.Multiline = true;
-            this.textBox.Name = "textBox";
-            this.textBox.ReadOnly = true;
-            this.textBox.Size = new System.Drawing.Size(445, 401);
-            this.textBox.TabIndex = 0;
-            this.textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
-            // 
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemRS232});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(445, 24);
+            this.menuStrip.Size = new System.Drawing.Size(411, 24);
             this.menuStrip.TabIndex = 1;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -122,9 +112,12 @@
             this.flowLayoutPanel.Controls.Add(this.pictureBoxCountdown1);
             this.flowLayoutPanel.Controls.Add(this.pictureBoxCountdown2);
             this.flowLayoutPanel.Controls.Add(this.pictureBoxCountdown3);
-            this.flowLayoutPanel.Location = new System.Drawing.Point(12, 27);
+            this.flowLayoutPanel.Controls.Add(this.buttonStart);
+            this.flowLayoutPanel.Controls.Add(this.labelStatus);
+            this.flowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel.Location = new System.Drawing.Point(0, 24);
             this.flowLayoutPanel.Name = "flowLayoutPanel";
-            this.flowLayoutPanel.Size = new System.Drawing.Size(421, 123);
+            this.flowLayoutPanel.Size = new System.Drawing.Size(411, 331);
             this.flowLayoutPanel.TabIndex = 2;
             // 
             // pictureBoxCountdown1
@@ -132,35 +125,56 @@
             this.pictureBoxCountdown1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.pictureBoxCountdown1.Location = new System.Drawing.Point(3, 3);
             this.pictureBoxCountdown1.Name = "pictureBoxCountdown1";
-            this.pictureBoxCountdown1.Size = new System.Drawing.Size(135, 112);
+            this.pictureBoxCountdown1.Size = new System.Drawing.Size(130, 112);
             this.pictureBoxCountdown1.TabIndex = 1;
             this.pictureBoxCountdown1.TabStop = false;
             // 
             // pictureBoxCountdown2
             // 
             this.pictureBoxCountdown2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.pictureBoxCountdown2.Location = new System.Drawing.Point(144, 3);
+            this.pictureBoxCountdown2.Location = new System.Drawing.Point(139, 3);
             this.pictureBoxCountdown2.Name = "pictureBoxCountdown2";
-            this.pictureBoxCountdown2.Size = new System.Drawing.Size(129, 112);
+            this.pictureBoxCountdown2.Size = new System.Drawing.Size(130, 112);
             this.pictureBoxCountdown2.TabIndex = 0;
             this.pictureBoxCountdown2.TabStop = false;
             // 
             // pictureBoxCountdown3
             // 
             this.pictureBoxCountdown3.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.pictureBoxCountdown3.Location = new System.Drawing.Point(279, 3);
+            this.pictureBoxCountdown3.Location = new System.Drawing.Point(275, 3);
             this.pictureBoxCountdown3.Name = "pictureBoxCountdown3";
-            this.pictureBoxCountdown3.Size = new System.Drawing.Size(135, 112);
+            this.pictureBoxCountdown3.Size = new System.Drawing.Size(130, 112);
             this.pictureBoxCountdown3.TabIndex = 2;
             this.pictureBoxCountdown3.TabStop = false;
+            // 
+            // buttonStart
+            // 
+            this.buttonStart.Font = new System.Drawing.Font("Calibri", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonStart.Location = new System.Drawing.Point(3, 121);
+            this.buttonStart.Name = "buttonStart";
+            this.buttonStart.Size = new System.Drawing.Size(402, 100);
+            this.buttonStart.TabIndex = 3;
+            this.buttonStart.Text = "Start";
+            this.buttonStart.UseVisualStyleBackColor = true;
+            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+            // 
+            // labelStatus
+            // 
+            this.labelStatus.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.labelStatus.Font = new System.Drawing.Font("Calibri", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelStatus.Location = new System.Drawing.Point(3, 224);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(402, 100);
+            this.labelStatus.TabIndex = 4;
+            this.labelStatus.Text = "Status";
+            this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(445, 557);
+            this.ClientSize = new System.Drawing.Size(411, 355);
             this.Controls.Add(this.flowLayoutPanel);
-            this.Controls.Add(this.textBox);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
             this.Name = "FormMain";
@@ -178,8 +192,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox textBox;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRS232;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStart;
@@ -191,6 +203,8 @@
         private System.Windows.Forms.PictureBox pictureBoxCountdown1;
         private System.Windows.Forms.PictureBox pictureBoxCountdown2;
         private System.Windows.Forms.PictureBox pictureBoxCountdown3;
+        private System.Windows.Forms.Button buttonStart;
+        private System.Windows.Forms.Label labelStatus;
     }
 }
 
