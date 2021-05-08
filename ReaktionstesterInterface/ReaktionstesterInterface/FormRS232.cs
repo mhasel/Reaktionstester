@@ -12,7 +12,7 @@ namespace UART_RS232
 {
     public partial class FormRS232 : Form
     {
-        private System.IO.Ports.SerialPort oPort;
+        private readonly System.IO.Ports.SerialPort oPort;
 
         /// <summary>
         /// Constructor
@@ -26,7 +26,7 @@ namespace UART_RS232
             // Speicheradresse von serialPort auch an oPort zuweisen
             oPort = serialPort;
 
-            buttonRefresh_Click(null, null);
+            ButtonRefresh_Click(null, null);
 
             // default Parameter auswählen
             comboBoxRate.SelectedIndex = 0;
@@ -42,7 +42,7 @@ namespace UART_RS232
         /// <summary>
         /// Einstellungen von Setup übernehmen.
         /// </summary>
-        private void buttonOK_Click(object sender, EventArgs e)
+        private void ButtonOK_Click(object sender, EventArgs e)
         {
             // eingestellte Parameter übernehmen
             if (comboBoxPort.Text == string.Empty)
@@ -83,7 +83,7 @@ namespace UART_RS232
         /// <summary>
         /// Einstellungen verwerfen
         /// </summary>
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void ButtonCancel_Click(object sender, EventArgs e)
         {
             // eingestellte Parameter verwerfen
             comboBoxPort.Text = oPort.PortName;
@@ -112,7 +112,7 @@ namespace UART_RS232
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonRefresh_Click(object sender, EventArgs e)
+        private void ButtonRefresh_Click(object sender, EventArgs e)
         {
             // combobox items (collection) um einträge zu ändern
             string[] sActivePorts = System.IO.Ports.SerialPort.GetPortNames();

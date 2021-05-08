@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UART_RS232;
@@ -15,10 +12,12 @@ namespace ReaktionstesterInterface
 {
     public partial class FormMain : Form
     {
+        private delegate void oDataReceivedDeleg(char cReceived);
+
         private string sBuffer;
         private FormRS232 oSetupRS232;
-        private SerialPort serialPortToPsoC;
-        private Random oRandom;
+        private readonly SerialPort serialPortToPsoC;
+        private readonly Random oRandom;
         private bool bAnswerReceived;
         private List<int> oResults;
 
@@ -30,7 +29,7 @@ namespace ReaktionstesterInterface
             // SerialPort und Setupform initialisieren und SerialPort object an Konstruktor mitübergeben
             serialPortToPsoC = new SerialPort("COM3", 9600, Parity.None, 8, StopBits.One);
             oSetupRS232 = new FormRS232(serialPortToPsoC);
-            serialPortToPsoC.DataReceived += new SerialDataReceivedEventHandler(serialPortToPsoC_DataReceived);
+            serialPortToPsoC.DataReceived += new SerialDataReceivedEventHandler(SerialPortToPsoC_DataReceived);
             oResults = new List<int>();
 
             MaximizeBox = false;
@@ -42,10 +41,8 @@ namespace ReaktionstesterInterface
             toolStripMenuItemOpen.Enabled = false;
         }
 
-        private delegate void oDataReceivedDeleg(char cReceived);
-
-        #region ----------------------StripMenu---------------------------
-        private void toolStripMenuItemSetup_Click(object sender, EventArgs e)
+        #region //StripMenu------------------------------------------------------------------//
+        private void ToolStripMenuItemSetup_Click(object sender, EventArgs e)
         {
             // Überprüft, ob Instanz der Form existiert bzw. ob die Objekteferenz der Form bereits aus dem Speicher entfernt wurde
             // Notwendig, um ObjectDisposedException zu vermeiden
@@ -77,7 +74,7 @@ namespace ReaktionstesterInterface
             oSetupRS232 = null;
         }
 
-        private void toolStripMenuItemOpen_Click(object sender, EventArgs e)
+        private void ToolStripMenuItemOpen_Click(object sender, EventArgs e)
         {
             try
             {
@@ -94,11 +91,11 @@ namespace ReaktionstesterInterface
             }
             catch (Exception oEx)
             {
-                MessageBox.Show("Error opening serial port : " + oEx.Message, "Error!");
+                MessageBox.Show("Fehler beim Öffnen des Serialports: " + oEx.Message, "Error!");
             }
         }
 
-        private void toolStripMenuItemClose_Click(object sender, EventArgs e)
+        private void ToolStripMenuItemClose_Click(object sender, EventArgs e)
         {
             try
             {
@@ -112,16 +109,15 @@ namespace ReaktionstesterInterface
             }
             catch (Exception oEx)
             {
-                MessageBox.Show("Error opening serial port : " + oEx.Message, "Error!");
+                MessageBox.Show("Fehler beim Öffnen des Serialports: " + oEx.Message, "Error!");
             }
         }
 
-        private void toolStripMenuItemExit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
+        private void ToolStripMenuItemExit_Click(object sender, EventArgs e) => Application.Exit();
         #endregion
-        private void serialPortToPsoC_DataReceived(object sender, SerialDataReceivedEventArgs e)
+
+        #region //receive serial-------------------------------------------------------------//
+        private void SerialPortToPsoC_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             if (serialPortToPsoC.IsOpen)
             {
@@ -154,6 +150,34 @@ namespace ReaktionstesterInterface
             sBuffer += cChar;
 
             DisplayResult();
+        }
+
+        #endregion
+
+        #region //reaction test--------------------------------------------------------------//
+        private async void ButtonStart_Click(object sender, EventArgs e)
+        {
+            buttonStart.Enabled = false;
+            bAnswerReceived = false;
+
+            try
+            {
+                if (serialPortToPsoC.IsOpen)
+                {
+                    serialPortToPsoC.Write("s");
+
+                    await Task.Run(async () =>
+                    {
+                        await ReactionTest();
+                    });
+                }
+                else
+                {
+                    labelStatus.Text = "Port nicht geöffnet.";
+                    buttonStart.Enabled = true;
+                }
+            }
+            catch { };
         }
 
         private void DisplayResult()
@@ -198,32 +222,7 @@ namespace ReaktionstesterInterface
             listBoxResults.DataSource = (oResults.Count > 5) ? oResults.Take(5).ToList() : oResults;
         }
 
-        private async void buttonStart_Click(object sender, EventArgs e)
-        {
-            buttonStart.Enabled = false;
-            bAnswerReceived = false;
-
-            try
-            {
-                if (serialPortToPsoC.IsOpen)
-                {
-                    serialPortToPsoC.Write("s");
-
-                    await Task.Run(async () =>
-                    {
-                        await RunReactionTest();
-                    });
-                }
-                else
-                {
-                    labelStatus.Text = "Port nicht geöffnet.";
-                    buttonStart.Enabled = true;
-                }
-            }
-            catch { };
-        }
-
-        private async Task RunReactionTest()
+        private async Task ReactionTest()
         {
             foreach (PictureBox oBox in flowLayoutPanel.Controls.OfType<PictureBox>())
             {
@@ -334,5 +333,6 @@ namespace ReaktionstesterInterface
                 }
             }));
         }
+        #endregion
     }
 }

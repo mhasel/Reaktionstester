@@ -79,7 +79,7 @@
             this.toolStripMenuItemStart.ShortcutKeys = System.Windows.Forms.Keys.F10;
             this.toolStripMenuItemStart.Size = new System.Drawing.Size(135, 22);
             this.toolStripMenuItemStart.Text = "Setup";
-            this.toolStripMenuItemStart.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
+            this.toolStripMenuItemStart.Click += new System.EventHandler(this.ToolStripMenuItemSetup_Click);
             // 
             // toolStripMenuItemOpen
             // 
@@ -87,7 +87,7 @@
             this.toolStripMenuItemOpen.ShortcutKeys = System.Windows.Forms.Keys.F11;
             this.toolStripMenuItemOpen.Size = new System.Drawing.Size(135, 22);
             this.toolStripMenuItemOpen.Text = "Open";
-            this.toolStripMenuItemOpen.Click += new System.EventHandler(this.toolStripMenuItemOpen_Click);
+            this.toolStripMenuItemOpen.Click += new System.EventHandler(this.ToolStripMenuItemOpen_Click);
             // 
             // toolStripMenuItemClose
             // 
@@ -95,7 +95,7 @@
             this.toolStripMenuItemClose.ShortcutKeys = System.Windows.Forms.Keys.F12;
             this.toolStripMenuItemClose.Size = new System.Drawing.Size(135, 22);
             this.toolStripMenuItemClose.Text = "Close";
-            this.toolStripMenuItemClose.Click += new System.EventHandler(this.toolStripMenuItemClose_Click);
+            this.toolStripMenuItemClose.Click += new System.EventHandler(this.ToolStripMenuItemClose_Click);
             // 
             // toolStripSeparator
             // 
@@ -108,7 +108,7 @@
             this.toolStripMenuItemExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
             this.toolStripMenuItemExit.Size = new System.Drawing.Size(135, 22);
             this.toolStripMenuItemExit.Text = "Exit";
-            this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
+            this.toolStripMenuItemExit.Click += new System.EventHandler(this.ToolStripMenuItemExit_Click);
             // 
             // flowLayoutPanel
             // 
@@ -160,7 +160,7 @@
             this.buttonStart.TabIndex = 3;
             this.buttonStart.Text = "Start";
             this.buttonStart.UseVisualStyleBackColor = true;
-            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+            this.buttonStart.Click += new System.EventHandler(this.ButtonStart_Click);
             // 
             // labelStatus
             // 
