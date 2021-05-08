@@ -41,11 +41,14 @@
             this.pictureBoxCountdown3 = new System.Windows.Forms.PictureBox();
             this.buttonStart = new System.Windows.Forms.Button();
             this.labelStatus = new System.Windows.Forms.Label();
+            this.groupBoxResults = new System.Windows.Forms.GroupBox();
+            this.listBoxResults = new System.Windows.Forms.ListBox();
             this.menuStrip.SuspendLayout();
             this.flowLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCountdown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCountdown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCountdown3)).BeginInit();
+            this.groupBoxResults.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -112,12 +115,13 @@
             this.flowLayoutPanel.Controls.Add(this.pictureBoxCountdown1);
             this.flowLayoutPanel.Controls.Add(this.pictureBoxCountdown2);
             this.flowLayoutPanel.Controls.Add(this.pictureBoxCountdown3);
-            this.flowLayoutPanel.Controls.Add(this.buttonStart);
             this.flowLayoutPanel.Controls.Add(this.labelStatus);
+            this.flowLayoutPanel.Controls.Add(this.buttonStart);
+            this.flowLayoutPanel.Controls.Add(this.groupBoxResults);
             this.flowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel.Location = new System.Drawing.Point(0, 24);
             this.flowLayoutPanel.Name = "flowLayoutPanel";
-            this.flowLayoutPanel.Size = new System.Drawing.Size(411, 331);
+            this.flowLayoutPanel.Size = new System.Drawing.Size(411, 435);
             this.flowLayoutPanel.TabIndex = 2;
             // 
             // pictureBoxCountdown1
@@ -150,7 +154,7 @@
             // buttonStart
             // 
             this.buttonStart.Font = new System.Drawing.Font("Calibri", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonStart.Location = new System.Drawing.Point(3, 121);
+            this.buttonStart.Location = new System.Drawing.Point(3, 221);
             this.buttonStart.Name = "buttonStart";
             this.buttonStart.Size = new System.Drawing.Size(402, 100);
             this.buttonStart.TabIndex = 3;
@@ -161,31 +165,52 @@
             // labelStatus
             // 
             this.labelStatus.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.labelStatus.Font = new System.Drawing.Font("Calibri", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelStatus.Location = new System.Drawing.Point(3, 224);
+            this.labelStatus.Font = new System.Drawing.Font("Calibri", 18.25F);
+            this.labelStatus.Location = new System.Drawing.Point(3, 118);
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(402, 100);
             this.labelStatus.TabIndex = 4;
             this.labelStatus.Text = "Status";
             this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // groupBoxResults
+            // 
+            this.groupBoxResults.Controls.Add(this.listBoxResults);
+            this.groupBoxResults.Location = new System.Drawing.Point(3, 327);
+            this.groupBoxResults.Name = "groupBoxResults";
+            this.groupBoxResults.Size = new System.Drawing.Size(402, 100);
+            this.groupBoxResults.TabIndex = 5;
+            this.groupBoxResults.TabStop = false;
+            this.groupBoxResults.Text = "Top 5:";
+            // 
+            // listBoxResults
+            // 
+            this.listBoxResults.FormattingEnabled = true;
+            this.listBoxResults.Location = new System.Drawing.Point(9, 13);
+            this.listBoxResults.Name = "listBoxResults";
+            this.listBoxResults.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.listBoxResults.Size = new System.Drawing.Size(387, 82);
+            this.listBoxResults.TabIndex = 0;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(411, 355);
+            this.ClientSize = new System.Drawing.Size(411, 459);
             this.Controls.Add(this.flowLayoutPanel);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
             this.Name = "FormMain";
             this.ShowIcon = false;
-            this.Text = "FormMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Reaktionstester";
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.flowLayoutPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCountdown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCountdown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCountdown3)).EndInit();
+            this.groupBoxResults.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -205,6 +230,8 @@
         private System.Windows.Forms.PictureBox pictureBoxCountdown3;
         private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.GroupBox groupBoxResults;
+        private System.Windows.Forms.ListBox listBoxResults;
     }
 }
 

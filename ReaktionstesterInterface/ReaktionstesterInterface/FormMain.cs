@@ -18,22 +18,25 @@ namespace ReaktionstesterInterface
         private string sBuffer;
         private FormRS232 oSetupRS232;
         private SerialPort serialPortToPsoC;
-        private CancellationTokenSource oCTS;
         private Random oRandom;
+        private bool bAnswerReceived;
+        private List<int> oResults;
 
         public FormMain()
         {
             InitializeComponent();
 
-            MaximizeBox = false;
-            FormBorderStyle = FormBorderStyle.Fixed3D;
-
-            oCTS = new CancellationTokenSource();
             oRandom = new Random();
             // SerialPort und Setupform initialisieren und SerialPort object an Konstruktor mitübergeben
             serialPortToPsoC = new SerialPort("COM3", 9600, Parity.None, 8, StopBits.One);
             oSetupRS232 = new FormRS232(serialPortToPsoC);
             serialPortToPsoC.DataReceived += new SerialDataReceivedEventHandler(serialPortToPsoC_DataReceived);
+            oResults = new List<int>();
+
+            MaximizeBox = false;
+            FormBorderStyle = FormBorderStyle.Fixed3D;
+            labelStatus.Text = "Sobald alle 3 Kästchen grün leuchten, Taste am PsoC drücken.";
+
             // Menüpunkte "ausgrauen" bis RS232 Setup ausgeführt wurde
             toolStripMenuItemClose.Enabled = false;
             toolStripMenuItemOpen.Enabled = false;
@@ -88,18 +91,6 @@ namespace ReaktionstesterInterface
                 toolStripMenuItemClose.Enabled = true;
                 toolStripMenuItemOpen.Enabled = false;
                 sBuffer = string.Empty;
-
-                if (serialPortToPsoC.IsOpen)
-                {
-                    try
-                    {
-                        serialPortToPsoC.Write("~");
-                    }
-                    catch
-                    {
-                        // leer
-                    }
-                }
             }
             catch (Exception oEx)
             {
@@ -166,35 +157,73 @@ namespace ReaktionstesterInterface
         }
 
         private void DisplayResult()
-        {            
-            if ((sBuffer.Length > 2) && (sBuffer.Substring(0,2) == "R:") && (sBuffer.Substring(sBuffer.Length - 1) == "|"))   
+        {
+            try
             {
-                string sMessage = sBuffer.Substring(2, sBuffer.Length - 3);
+                if ((sBuffer.Length > 2) && (sBuffer.Substring(0, 2) == "R:") && (sBuffer.Substring(sBuffer.Length - 1) == "|"))
+                {
+                    bAnswerReceived = true;
 
-                switch (sMessage)
-                {                    
-                    // Taste gehalten
-                    case "-2":
-                        labelStatus.Text = "Knopf gedrückt halten gilt nicht :)";
-                        break;
+                    string sMessage = sBuffer.Substring(2, sBuffer.Length - 3);
 
-                    // Taste nicht gedrückt
-                    case "-1":
-                        labelStatus.Text = "Knopf nicht gedrückt.";
-                        break;
+                    switch (sMessage)
+                    {
+                        // Taste gehalten
+                        case "-2":
+                            labelStatus.Text = "Knopf gedrückt halten gilt nicht :)";
+                            break;
 
-                    // Messung valide
-                    default:
-                        labelStatus.Text = $"Reaktionszeit: {sMessage} ms.";
-                        break;
+                        // Taste nicht gedrückt
+                        case "-1":
+                            labelStatus.Text = "Knopf nicht gedrückt.";
+                            break;
+
+                        // Messung valide
+                        default:
+                            labelStatus.Text = $"Reaktionszeit: {sMessage} ms.";
+                            oResults.Add(Convert.ToInt32(sMessage));
+                            UpdateResultsList();
+                            break;
+                    }
+
+                    sBuffer = string.Empty;
                 }
-
-                sBuffer = string.Empty;
-                buttonStart.Enabled = true;
             }
+            catch { }
         }
 
-        private async Task Countdown(CancellationToken oCancellationToken)
+        private void UpdateResultsList()
+        {
+            oResults = oResults.OrderBy(iNumber => iNumber).ToList();
+            listBoxResults.DataSource = (oResults.Count > 5) ? oResults.Take(5).ToList() : oResults;
+        }
+
+        private async void buttonStart_Click(object sender, EventArgs e)
+        {
+            buttonStart.Enabled = false;
+            bAnswerReceived = false;
+
+            try
+            {
+                if (serialPortToPsoC.IsOpen)
+                {
+                    serialPortToPsoC.Write("s");
+
+                    await Task.Run(async () =>
+                    {
+                        await RunReactionTest();
+                    });
+                }
+                else
+                {
+                    labelStatus.Text = "Port nicht geöffnet.";
+                    buttonStart.Enabled = true;
+                }
+            }
+            catch { };
+        }
+
+        private async Task RunReactionTest()
         {
             foreach (PictureBox oBox in flowLayoutPanel.Controls.OfType<PictureBox>())
             {
@@ -209,7 +238,15 @@ namespace ReaktionstesterInterface
                 serialPortToPsoC.Write(iCountdown.ToString());
                 labelStatus.Invoke(new Action(() =>
                 {
-                    labelStatus.Text = $"{iCountdown}";
+                    if (iCountdown > 0)
+                    {
+                        labelStatus.Text = $"{iCountdown}";
+                    }
+                    else
+                    {
+                        labelStatus.Text = "...";
+                    }
+
                 }));
 
                 switch (iCountdown)
@@ -219,25 +256,31 @@ namespace ReaktionstesterInterface
                         {
                             pictureBoxCountdown3.BackColor = Color.Gray;
                         }));
+
                         break;
+
                     case 1:
                         pictureBoxCountdown2.Invoke(new Action(() =>
                         {
                             pictureBoxCountdown2.BackColor = Color.Gray;
                         }));
+
                         break;
+
                     case 0:
                         pictureBoxCountdown1.Invoke(new Action(() =>
                         {
                             pictureBoxCountdown1.BackColor = Color.Gray;
                         }));
+
                         break;
                 }
-                await Task.Delay(1000, oCTS.Token);
+
+                await Task.Delay(1000);
             }
 
-            await Task.Delay(1000 + oRandom.Next(1000), oCTS.Token);
-            serialPortToPsoC.Write("g");
+            await Task.Delay(1000 + oRandom.Next(1000));
+
             foreach (PictureBox oBox in flowLayoutPanel.Controls.OfType<PictureBox>())
             {
                 oBox.Invoke(new Action(() =>
@@ -245,29 +288,51 @@ namespace ReaktionstesterInterface
                     oBox.BackColor = Color.LimeGreen;
                 }));
             }
-        }
 
-        private async void buttonStart_Click(object sender, EventArgs e)
-        {
-            buttonStart.Enabled = false;            
+            serialPortToPsoC.Write("g");
 
-            try
+            labelStatus.Invoke(new Action(() =>
             {
-                if (serialPortToPsoC.IsOpen)
+                labelStatus.Text = "Go!";
+            }));
+
+            await Task.Run(new Action(async () =>
+            {
+                try
                 {
-                    serialPortToPsoC.Write("s");
-                    await Task.Run(async () =>
+                    await Task.Delay(3000);
+
+                    if (!bAnswerReceived)
                     {
-                        await Countdown(oCTS.Token);
-                    });                    
+                        throw new OperationCanceledException();
+                    }
                 }
-                else
+                catch (OperationCanceledException)
                 {
-                    labelStatus.Text = "Port nicht geöffnet.";
-                    buttonStart.Enabled = true;
+                    // timeout
+                    MessageBox.Show("Zeitüberschreitung. Keine Antwort von PsoC.");
                 }
-            }
-            catch { };
+                finally
+                {
+                    foreach (PictureBox oBox in flowLayoutPanel.Controls.OfType<PictureBox>())
+                    {
+                        oBox.Invoke(new Action(() =>
+                        {
+                            oBox.BackColor = Color.Gray;
+                        }));
+                    }
+
+                    buttonStart.Invoke(new Action(() =>
+                    {
+                        buttonStart.Enabled = true;
+                    }));
+
+                    labelStatus.Invoke(new Action(() =>
+                    {
+                        labelStatus.Text = "Sobald alle 3 Kästchen grün leuchten, Taste am PsoC drücken.";
+                    }));
+                }
+            }));
         }
     }
 }
