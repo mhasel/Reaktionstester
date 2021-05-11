@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UART_RS232;
+using HighscoreFileHandling;
 
 namespace ReaktionstesterInterface
 {
@@ -20,6 +21,7 @@ namespace ReaktionstesterInterface
         private readonly Random oRandom;
         private bool bAnswerReceived;
         private List<int> oResults;
+        private Dictionary<string, int> oHighscores;
 
         public FormMain()
         {
@@ -32,6 +34,9 @@ namespace ReaktionstesterInterface
             serialPortToPsoC.DataReceived += new SerialDataReceivedEventHandler(SerialPortToPsoC_DataReceived);
             oResults = new List<int>();
 
+            // ---------------------------------------------- test -----------------------------------      
+            oHighscores = Highscores.ReadFile().ParseHighscores();
+
             MaximizeBox = false;
             FormBorderStyle = FormBorderStyle.Fixed3D;
             labelStatus.Text = "Sobald alle 3 Kästchen grün leuchten, Taste am PsoC drücken.";
@@ -39,6 +44,9 @@ namespace ReaktionstesterInterface
             // Menüpunkte "ausgrauen" bis RS232 Setup ausgeführt wurde
             toolStripMenuItemClose.Enabled = false;
             toolStripMenuItemOpen.Enabled = false;
+
+            tabControl.TabPages[0].Text = "seit Programmstart:";
+            tabControl.TabPages[1].Text = "aller Zeiten:";
         }
 
         #region //StripMenu------------------------------------------------------------------//
@@ -116,7 +124,7 @@ namespace ReaktionstesterInterface
         private void ToolStripMenuItemExit_Click(object sender, EventArgs e) => Application.Exit();
         #endregion
 
-        #region //receive serial-------------------------------------------------------------//
+        #region //receive serialport data----------------------------------------------------------//
         private void SerialPortToPsoC_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             if (serialPortToPsoC.IsOpen)
@@ -157,6 +165,9 @@ namespace ReaktionstesterInterface
         #region //reaction test--------------------------------------------------------------//
         private async void ButtonStart_Click(object sender, EventArgs e)
         {
+            //------------------------------------------test------------------------------------
+
+            //----------------------------------------------------------------------------------
             buttonStart.Enabled = false;
             bAnswerReceived = false;
 
@@ -165,7 +176,7 @@ namespace ReaktionstesterInterface
                 if (serialPortToPsoC.IsOpen)
                 {
                     serialPortToPsoC.Write("s");
-
+                    
                     await Task.Run(async () =>
                     {
                         await ReactionTest();
@@ -177,7 +188,7 @@ namespace ReaktionstesterInterface
                     buttonStart.Enabled = true;
                 }
             }
-            catch { };
+            catch { };            
         }
 
         private void DisplayResult()
@@ -206,7 +217,7 @@ namespace ReaktionstesterInterface
                         default:
                             labelStatus.Text = $"Reaktionszeit: {sMessage} ms.";
                             oResults.Add(Convert.ToInt32(sMessage));
-                            UpdateResultsList();
+                            UpdateSessionResults();
                             break;
                     }
 
@@ -216,10 +227,18 @@ namespace ReaktionstesterInterface
             catch { }
         }
 
-        private void UpdateResultsList()
+        private void UpdateSessionResults()
         {
             oResults = oResults.OrderBy(iNumber => iNumber).ToList();
             listBoxResults.DataSource = (oResults.Count > 5) ? oResults.Take(5).ToList() : oResults;
+        }
+
+        private void UpdateAllTimeResults(string name, List<int> results)
+        {
+           if (listBoxHighscores.Items.Count == 0)
+            {
+                // TODO
+            }
         }
 
         private async Task ReactionTest()
