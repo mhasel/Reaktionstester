@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UART_RS232;
+using HighscoreFileHandling;
 
 namespace ReaktionstesterInterface
 {
@@ -19,7 +20,9 @@ namespace ReaktionstesterInterface
         private readonly SerialPort serialPortToPsoC;
         private readonly Random oRandom;
         private bool bAnswerReceived;
+        private string sName;
         private List<int> oResults;
+        private Dictionary<string, int> oHighscores;
 
         public FormMain()
         {
@@ -30,7 +33,11 @@ namespace ReaktionstesterInterface
             serialPortToPsoC = new SerialPort("COM3", 9600, Parity.None, 8, StopBits.One);
             oSetupRS232 = new FormRS232(serialPortToPsoC);
             serialPortToPsoC.DataReceived += new SerialDataReceivedEventHandler(SerialPortToPsoC_DataReceived);
+
             oResults = new List<int>();
+
+            // ---------------------------------------------- test -----------------------------------      
+            UpdateHighscores(null, null);
 
             MaximizeBox = false;
             FormBorderStyle = FormBorderStyle.Fixed3D;
@@ -39,6 +46,9 @@ namespace ReaktionstesterInterface
             // Menüpunkte "ausgrauen" bis RS232 Setup ausgeführt wurde
             toolStripMenuItemClose.Enabled = false;
             toolStripMenuItemOpen.Enabled = false;
+
+            tabControl.TabPages[0].Text = "seit Programmstart:";
+            tabControl.TabPages[1].Text = "aller Zeiten:";
         }
 
         #region //StripMenu------------------------------------------------------------------//
@@ -116,7 +126,7 @@ namespace ReaktionstesterInterface
         private void ToolStripMenuItemExit_Click(object sender, EventArgs e) => Application.Exit();
         #endregion
 
-        #region //receive serial-------------------------------------------------------------//
+        #region //receive serialport data----------------------------------------------------------//
         private void SerialPortToPsoC_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             if (serialPortToPsoC.IsOpen)
@@ -157,27 +167,29 @@ namespace ReaktionstesterInterface
         #region //reaction test--------------------------------------------------------------//
         private async void ButtonStart_Click(object sender, EventArgs e)
         {
+            //------------------------------------------test------------------------------------
+
+            //----------------------------------------------------------------------------------
             buttonStart.Enabled = false;
             bAnswerReceived = false;
 
             try
             {
-                if (serialPortToPsoC.IsOpen)
-                {
-                    serialPortToPsoC.Write("s");
-
-                    await Task.Run(async () =>
-                    {
-                        await ReactionTest();
-                    });
-                }
-                else
+                if (serialPortToPsoC.IsOpen == false)
                 {
                     labelStatus.Text = "Port nicht geöffnet.";
                     buttonStart.Enabled = true;
+                    return;
                 }
+
+                serialPortToPsoC.Write("s");
+
+                await Task.Run(async () =>
+                {
+                    await ReactionTest();
+                });
             }
-            catch { };
+            catch { };            
         }
 
         private void DisplayResult()
@@ -206,7 +218,7 @@ namespace ReaktionstesterInterface
                         default:
                             labelStatus.Text = $"Reaktionszeit: {sMessage} ms.";
                             oResults.Add(Convert.ToInt32(sMessage));
-                            UpdateResultsList();
+                            UpdateSessionResults();
                             break;
                     }
 
@@ -216,10 +228,28 @@ namespace ReaktionstesterInterface
             catch { }
         }
 
-        private void UpdateResultsList()
+        private void UpdateSessionResults()
         {
             oResults = oResults.OrderBy(iNumber => iNumber).ToList();
             listBoxResults.DataSource = (oResults.Count > 5) ? oResults.Take(5).ToList() : oResults;
+        }
+
+        private void UpdateHighscores(string name, List<int> results)
+        {
+            if (listBoxHighscores.Items.Count == 0)
+            {
+               oHighscores = Highscores.ReadFile().ParseHighscores();
+            }
+
+            if (textBoxName.Text.Contains('|'))
+            {
+                MessageBox.Show("Name enthält reserviertes Zeichen '|'. Bitte ändern Sie den Namen im Textfeld.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            if (textBoxName.Text == string.Empty)
+            {
+                return;
+            }
         }
 
         private async Task ReactionTest()
@@ -332,6 +362,10 @@ namespace ReaktionstesterInterface
                     }));
                 }
             }));
+        }
+        private void TextBoxName_TextChanged(object sender, EventArgs e)
+        {
+            sName = textBoxName.Text;
         }
         #endregion
     }
