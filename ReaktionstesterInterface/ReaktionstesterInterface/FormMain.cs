@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using UART_RS232;
 using HighscoreFileHandling;
+using ErrorLogger;
 
 namespace ReaktionstesterInterface
 {
@@ -15,6 +16,7 @@ namespace ReaktionstesterInterface
     {
         private delegate void oDataReceivedDeleg(char cReceived);
 
+        private IExceptionLogger ILogger = new ExceptionLogger();
         private string sBuffer;
         private FormRS232 oSetupRS232;
         private readonly SerialPort serialPortToPsoC;
@@ -101,6 +103,7 @@ namespace ReaktionstesterInterface
             }
             catch (Exception oEx)
             {
+                ILogger.LogError(oEx.ToString());
                 MessageBox.Show("Fehler beim Öffnen des Serialports: " + oEx.Message, "Error!");
             }
         }
@@ -119,6 +122,7 @@ namespace ReaktionstesterInterface
             }
             catch (Exception oEx)
             {
+                ILogger.LogError(oEx.ToString());
                 MessageBox.Show("Fehler beim Öffnen des Serialports: " + oEx.Message, "Error!");
             }
         }
@@ -142,9 +146,9 @@ namespace ReaktionstesterInterface
                     {
                         BeginInvoke(new oDataReceivedDeleg(SerialDataReceived), new object[] { cChar });
                     }
-                    catch
+                    catch(Exception oEx)
                     {
-                        // Fehlermeldungen werden "geschluckt"
+                        ILogger.LogError(oEx.ToString());
                     }
                 }
             }
@@ -167,14 +171,13 @@ namespace ReaktionstesterInterface
         #region //reaction test--------------------------------------------------------------//
         private async void ButtonStart_Click(object sender, EventArgs e)
         {
-            //------------------------------------------test------------------------------------
-
-            //----------------------------------------------------------------------------------
             buttonStart.Enabled = false;
             bAnswerReceived = false;
 
             try
             {
+                //throw new Exception("Test-exception");
+
                 if (serialPortToPsoC.IsOpen == false)
                 {
                     labelStatus.Text = "Port nicht geöffnet.";
@@ -189,7 +192,10 @@ namespace ReaktionstesterInterface
                     await ReactionTest();
                 });
             }
-            catch { };            
+            catch (Exception oEx)
+            {
+                ILogger.LogError(oEx.ToString());
+            };            
         }
 
         private void DisplayResult()
@@ -224,7 +230,10 @@ namespace ReaktionstesterInterface
                     sBuffer = string.Empty;
                 }
             }
-            catch { }
+            catch (Exception oEx)
+            {
+                ILogger.LogError(oEx.ToString());
+            };
         }
 
         private void UpdateResults(int iTime)
@@ -251,8 +260,16 @@ namespace ReaktionstesterInterface
 
         private void ImportHighscores()
         {
+            List<string> oDataSource = new List<string>();
             oHighscores = Highscores.ReadFile().ParseHighscores();
-            listBoxHighscores.DataSource = oHighscores;
+            oHighscores = oHighscores.OrderBy(iNumber => iNumber.Value);
+
+            foreach (KeyValuePair<string,int> oItem in oHighscores)
+            {
+                oDataSource.Add($"{oItem.Key}\t|\t{oItem.Value.ToString()} ms");
+            }
+
+            listBoxHighscores.DataSource = oDataSource;
         }
 
         private async Task ReactionTest()
@@ -344,6 +361,10 @@ namespace ReaktionstesterInterface
                     // timeout
                     MessageBox.Show("Zeitüberschreitung. Keine Antwort von PsoC.");
                 }
+                catch (Exception oEx)
+                {
+                    ILogger.LogError(oEx.ToString());
+                }
                 finally
                 {
                     foreach (PictureBox oBox in flowLayoutPanel.Controls.OfType<PictureBox>())
@@ -371,5 +392,25 @@ namespace ReaktionstesterInterface
             sName = textBoxName.Text;
         }
         #endregion
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                oHighscores.WriteFile();
+                // throw new Exception();
+            }
+            catch(Exception oEx)
+            {
+                ILogger.LogError(oEx.ToString());
+                DialogResult oConfirm = new DialogResult();
+                oConfirm = MessageBox.Show("Fehler beim sichern der Highscores. Trotzdem fortfahren?",
+                                           "Warnung:", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (oConfirm == DialogResult.No)
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
     }
 }

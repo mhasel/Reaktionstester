@@ -69,13 +69,24 @@ namespace HighscoreFileHandling
 
             try
             {
-                oList.Where(sItem => sItem.Contains(cSeparator))
-                     .Select(sItem => new KeyValuePair<string, int>(sItem.Substring(0, sItem.IndexOf(cSeparator)), Convert.ToInt32(sItem.Substring(sItem.IndexOf(cSeparator) + 1))))
-                     .ToList()
-                     .ForEach(sItem =>
+                // filter out possible invalid entries
+                oList = oList.Where(sItem => sItem.Contains(cSeparator)).ToList();
+                oList.ForEach(sItem =>
                      {
-                        oDict.Add(sItem.Key, sItem.Value);
+                         string sKey;
+                         string sValue;
+                         char[] cToTrim = new char[] { };     
+                                             
+                         // divide string in list into key and value parts, divided by the separator character
+                         sKey = sItem.Substring(0, sItem.IndexOf(cSeparator)).Trim();
+                         sValue = sItem.Substring(sItem.IndexOf(cSeparator));
+                         // filter value string for digit characters (in case of suffix)
+                         sValue = new string(sValue.Where(cChar => char.IsDigit(cChar)).ToArray());
+                         // add new keyvaluepair to dictionary
+                         oDict.Add(sKey, Convert.ToInt32(sValue));
                      });
+
+
             }
             catch (Exception oEx)
             {
@@ -107,11 +118,11 @@ namespace HighscoreFileHandling
         }
 
         public static void WriteFile
-            (
+        (
             this Dictionary<string, int> oDict,
             string sFilename = "Highscores.txt",
             char cSeparator = '|'
-            )
+        )
         {
             try
             {

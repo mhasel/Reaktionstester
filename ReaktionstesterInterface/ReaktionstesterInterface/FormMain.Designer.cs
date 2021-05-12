@@ -68,7 +68,8 @@
             this.toolStripMenuItemRS232});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(411, 24);
+            this.menuStrip.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
+            this.menuStrip.Size = new System.Drawing.Size(548, 28);
             this.menuStrip.TabIndex = 1;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -81,14 +82,14 @@
             this.toolStripSeparator,
             this.toolStripMenuItemExit});
             this.toolStripMenuItemRS232.Name = "toolStripMenuItemRS232";
-            this.toolStripMenuItemRS232.Size = new System.Drawing.Size(50, 20);
+            this.toolStripMenuItemRS232.Size = new System.Drawing.Size(62, 24);
             this.toolStripMenuItemRS232.Text = "RS232";
             // 
             // toolStripMenuItemStart
             // 
             this.toolStripMenuItemStart.Name = "toolStripMenuItemStart";
             this.toolStripMenuItemStart.ShortcutKeys = System.Windows.Forms.Keys.F10;
-            this.toolStripMenuItemStart.Size = new System.Drawing.Size(135, 22);
+            this.toolStripMenuItemStart.Size = new System.Drawing.Size(161, 26);
             this.toolStripMenuItemStart.Text = "Setup";
             this.toolStripMenuItemStart.Click += new System.EventHandler(this.ToolStripMenuItemSetup_Click);
             // 
@@ -96,7 +97,7 @@
             // 
             this.toolStripMenuItemOpen.Name = "toolStripMenuItemOpen";
             this.toolStripMenuItemOpen.ShortcutKeys = System.Windows.Forms.Keys.F11;
-            this.toolStripMenuItemOpen.Size = new System.Drawing.Size(135, 22);
+            this.toolStripMenuItemOpen.Size = new System.Drawing.Size(161, 26);
             this.toolStripMenuItemOpen.Text = "Open";
             this.toolStripMenuItemOpen.Click += new System.EventHandler(this.ToolStripMenuItemOpen_Click);
             // 
@@ -104,20 +105,20 @@
             // 
             this.toolStripMenuItemClose.Name = "toolStripMenuItemClose";
             this.toolStripMenuItemClose.ShortcutKeys = System.Windows.Forms.Keys.F12;
-            this.toolStripMenuItemClose.Size = new System.Drawing.Size(135, 22);
+            this.toolStripMenuItemClose.Size = new System.Drawing.Size(161, 26);
             this.toolStripMenuItemClose.Text = "Close";
             this.toolStripMenuItemClose.Click += new System.EventHandler(this.ToolStripMenuItemClose_Click);
             // 
             // toolStripSeparator
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(132, 6);
+            this.toolStripSeparator.Size = new System.Drawing.Size(158, 6);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
             this.toolStripMenuItemExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(135, 22);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(161, 26);
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.ToolStripMenuItemExit_Click);
             // 
@@ -130,35 +131,39 @@
             this.flowLayoutPanel.Controls.Add(this.buttonStart);
             this.flowLayoutPanel.Controls.Add(this.groupBoxName);
             this.flowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel.Location = new System.Drawing.Point(0, 24);
+            this.flowLayoutPanel.Location = new System.Drawing.Point(0, 28);
+            this.flowLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.flowLayoutPanel.Name = "flowLayoutPanel";
-            this.flowLayoutPanel.Size = new System.Drawing.Size(411, 521);
+            this.flowLayoutPanel.Size = new System.Drawing.Size(548, 643);
             this.flowLayoutPanel.TabIndex = 2;
             // 
             // pictureBoxCountdown1
             // 
             this.pictureBoxCountdown1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.pictureBoxCountdown1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBoxCountdown1.Location = new System.Drawing.Point(4, 4);
+            this.pictureBoxCountdown1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBoxCountdown1.Name = "pictureBoxCountdown1";
-            this.pictureBoxCountdown1.Size = new System.Drawing.Size(130, 112);
+            this.pictureBoxCountdown1.Size = new System.Drawing.Size(173, 138);
             this.pictureBoxCountdown1.TabIndex = 1;
             this.pictureBoxCountdown1.TabStop = false;
             // 
             // pictureBoxCountdown2
             // 
             this.pictureBoxCountdown2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.pictureBoxCountdown2.Location = new System.Drawing.Point(139, 3);
+            this.pictureBoxCountdown2.Location = new System.Drawing.Point(185, 4);
+            this.pictureBoxCountdown2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBoxCountdown2.Name = "pictureBoxCountdown2";
-            this.pictureBoxCountdown2.Size = new System.Drawing.Size(130, 112);
+            this.pictureBoxCountdown2.Size = new System.Drawing.Size(173, 138);
             this.pictureBoxCountdown2.TabIndex = 0;
             this.pictureBoxCountdown2.TabStop = false;
             // 
             // pictureBoxCountdown3
             // 
             this.pictureBoxCountdown3.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.pictureBoxCountdown3.Location = new System.Drawing.Point(275, 3);
+            this.pictureBoxCountdown3.Location = new System.Drawing.Point(366, 4);
+            this.pictureBoxCountdown3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBoxCountdown3.Name = "pictureBoxCountdown3";
-            this.pictureBoxCountdown3.Size = new System.Drawing.Size(130, 112);
+            this.pictureBoxCountdown3.Size = new System.Drawing.Size(173, 138);
             this.pictureBoxCountdown3.TabIndex = 2;
             this.pictureBoxCountdown3.TabStop = false;
             // 
@@ -166,9 +171,10 @@
             // 
             this.labelStatus.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.labelStatus.Font = new System.Drawing.Font("Calibri", 18.25F);
-            this.labelStatus.Location = new System.Drawing.Point(3, 118);
+            this.labelStatus.Location = new System.Drawing.Point(4, 146);
+            this.labelStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(402, 100);
+            this.labelStatus.Size = new System.Drawing.Size(536, 123);
             this.labelStatus.TabIndex = 4;
             this.labelStatus.Text = "Status";
             this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -176,9 +182,10 @@
             // buttonStart
             // 
             this.buttonStart.Font = new System.Drawing.Font("Calibri", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonStart.Location = new System.Drawing.Point(3, 221);
+            this.buttonStart.Location = new System.Drawing.Point(4, 273);
+            this.buttonStart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(402, 100);
+            this.buttonStart.Size = new System.Drawing.Size(536, 123);
             this.buttonStart.TabIndex = 3;
             this.buttonStart.Text = "Start";
             this.buttonStart.UseVisualStyleBackColor = true;
@@ -188,29 +195,32 @@
             // 
             this.groupBoxName.Controls.Add(this.textBoxName);
             this.groupBoxName.Controls.Add(this.groupBoxTop);
-            this.groupBoxName.Location = new System.Drawing.Point(3, 327);
+            this.groupBoxName.Location = new System.Drawing.Point(4, 404);
+            this.groupBoxName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBoxName.Name = "groupBoxName";
-            this.groupBoxName.Size = new System.Drawing.Size(408, 177);
+            this.groupBoxName.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBoxName.Size = new System.Drawing.Size(544, 218);
             this.groupBoxName.TabIndex = 2;
             this.groupBoxName.TabStop = false;
             this.groupBoxName.Text = "Name";
             // 
             // textBoxName
             // 
-            this.textBoxName.Location = new System.Drawing.Point(10, 20);
+            this.textBoxName.Location = new System.Drawing.Point(13, 25);
+            this.textBoxName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(385, 20);
+            this.textBoxName.Size = new System.Drawing.Size(512, 22);
             this.textBoxName.TabIndex = 6;
             this.textBoxName.TextChanged += new System.EventHandler(this.TextBoxName_TextChanged);
             // 
             // groupBoxTop
             // 
             this.groupBoxTop.Controls.Add(this.tabControl);
-            this.groupBoxTop.Location = new System.Drawing.Point(1, 47);
-            this.groupBoxTop.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBoxTop.Location = new System.Drawing.Point(1, 58);
+            this.groupBoxTop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBoxTop.Name = "groupBoxTop";
-            this.groupBoxTop.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBoxTop.Size = new System.Drawing.Size(402, 136);
+            this.groupBoxTop.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBoxTop.Size = new System.Drawing.Size(536, 167);
             this.groupBoxTop.TabIndex = 5;
             this.groupBoxTop.TabStop = false;
             this.groupBoxTop.Text = "Bestenliste";
@@ -220,21 +230,21 @@
             this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Controls.Add(this.tabPage2);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl.Location = new System.Drawing.Point(2, 15);
-            this.tabControl.Margin = new System.Windows.Forms.Padding(2);
+            this.tabControl.Location = new System.Drawing.Point(3, 17);
+            this.tabControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(398, 119);
+            this.tabControl.Size = new System.Drawing.Size(530, 148);
             this.tabControl.TabIndex = 1;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.listBoxResults);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage1.Size = new System.Drawing.Size(390, 93);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage1.Size = new System.Drawing.Size(522, 119);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -243,20 +253,22 @@
             // 
             this.listBoxResults.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBoxResults.FormattingEnabled = true;
-            this.listBoxResults.Location = new System.Drawing.Point(2, 2);
+            this.listBoxResults.ItemHeight = 16;
+            this.listBoxResults.Location = new System.Drawing.Point(3, 2);
+            this.listBoxResults.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listBoxResults.Name = "listBoxResults";
             this.listBoxResults.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.listBoxResults.Size = new System.Drawing.Size(386, 89);
+            this.listBoxResults.Size = new System.Drawing.Size(516, 115);
             this.listBoxResults.TabIndex = 0;
             // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.listBoxHighscores);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage2.Size = new System.Drawing.Size(390, 93);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage2.Size = new System.Drawing.Size(523, 117);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -265,24 +277,28 @@
             // 
             this.listBoxHighscores.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBoxHighscores.FormattingEnabled = true;
-            this.listBoxHighscores.Location = new System.Drawing.Point(2, 2);
+            this.listBoxHighscores.ItemHeight = 16;
+            this.listBoxHighscores.Location = new System.Drawing.Point(3, 2);
+            this.listBoxHighscores.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listBoxHighscores.Name = "listBoxHighscores";
             this.listBoxHighscores.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.listBoxHighscores.Size = new System.Drawing.Size(386, 89);
+            this.listBoxHighscores.Size = new System.Drawing.Size(517, 113);
             this.listBoxHighscores.TabIndex = 1;
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(411, 545);
+            this.ClientSize = new System.Drawing.Size(548, 671);
             this.Controls.Add(this.flowLayoutPanel);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FormMain";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Reaktionstester";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.flowLayoutPanel.ResumeLayout(false);

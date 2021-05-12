@@ -8,12 +8,7 @@ namespace ErrorLogger
     public static class ExtendErrorLogger
     {
         public static void LogError(this IExceptionLogger Logger, string sMessage, string sFilename = "Log.txt", bool bAddDateTime = true)
-        {
-            if (string.IsNullOrWhiteSpace(sFilename))
-            {
-                throw new ArgumentException($"'{nameof(sFilename)}' cannot be null or whitespace.", nameof(sFilename));
-            }
-            
+        {            
             Logger.Log(sMessage, "Error", sFilename, bAddDateTime);
         }
     }

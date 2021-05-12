@@ -9,23 +9,26 @@ namespace ErrorLogger
     {
         public void Log(string sMessage, string sFilename = "Log.txt", bool bAddDateTime = true)
         {
-            string sPath;
+            string sDirectoryPath;
+            string sLogFilePath;
+            string sCurrentTime = DateTime.Now.ToString("yyyy-MM-dd_HH.mm");
             List<string> oLines = new List<string>();
 
             if (bAddDateTime)
             {
-                sFilename = $"{DateTime.Now}_{sFilename}";
+                sFilename = $"{sCurrentTime}_{sFilename}";
             }
-
             // gets the current directory of the executing assembly and adds a verbatim string to access a sub-folder
-            sPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location + @"\logs\");
+            sDirectoryPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\logs\";
+            sLogFilePath = sDirectoryPath + sFilename;
 
-            if (File.Exists(sPath + sFilename))
+
+            if (File.Exists(sLogFilePath))
             {
                 string sReadLine;
                 try
                 {
-                    using (StreamReader Input = new StreamReader(sPath + sFilename))
+                    using (StreamReader Input = new StreamReader(sLogFilePath))
                     {
                         while ((sReadLine = Input.ReadLine()) != null)
                         {
@@ -38,20 +41,24 @@ namespace ErrorLogger
                     // TODO: if logger throws exception, then what? just ignore?
                 }
             }
+            else if (Directory.Exists(sDirectoryPath) == false)
+            {
+                Directory.CreateDirectory(sDirectoryPath);
+            }
 
             oLines.Add(sMessage);
 
-            using (StreamWriter Output = new StreamWriter(sPath + sFilename))
+            using (StreamWriter Output = new StreamWriter(sLogFilePath))
             {
                 oLines.ForEach(sLine => Output.WriteLine(sLine));
             }
 
-            DirectoryCleanUp(sPath);
+            DirectoryCleanUp(sDirectoryPath);
         }
 
         public void Log(string sMessage, string sMessageType, string sFilename, bool bAddDateTime = true)
         {
-            Log($"{sMessageType}: {sMessage}", sFilename, bAddDateTime);
+            Log($"{ sMessageType}: {sMessage}", sFilename, bAddDateTime);
         }
 
         public static void DirectoryCleanUp(string sPath)
