@@ -11,7 +11,7 @@ namespace HighscoreFileHandling
     public static class Highscores
     {
         private static IExceptionLogger Logger = new ExceptionLogger();
-        public static void AddItemAndSort(this Dictionary<string, int> oDict, string sName, int iTime)
+        public static void UpdateHighscores(this Dictionary<string, int> oDict, string sName, int iTime)
         {
             if (oDict.ContainsKey(sName))
             {
@@ -26,6 +26,12 @@ namespace HighscoreFileHandling
             }
 
             oDict = oDict.OrderBy(oKeyValuePair => oKeyValuePair.Value).ToDictionary(sKey => sKey.Key, iValue => iValue.Value);
+            
+            if (oDict.Count > 10)
+            {
+                // TODO: TESTING
+                oDict = (Dictionary<string, int>)oDict.Take(10);
+            }
          }
 
         public static List<string> ReadFile(string sFilename = "Highscores.txt")

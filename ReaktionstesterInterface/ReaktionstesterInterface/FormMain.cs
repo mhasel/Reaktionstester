@@ -21,7 +21,7 @@ namespace ReaktionstesterInterface
         private readonly Random oRandom;
         private bool bAnswerReceived;
         private string sName;
-        private List<int> oResults;
+        private Dictionary<string, int> oResults;
         private Dictionary<string, int> oHighscores;
 
         public FormMain()
@@ -34,10 +34,10 @@ namespace ReaktionstesterInterface
             oSetupRS232 = new FormRS232(serialPortToPsoC);
             serialPortToPsoC.DataReceived += new SerialDataReceivedEventHandler(SerialPortToPsoC_DataReceived);
 
-            oResults = new List<int>();
+            oResults = new Dictionary<string, int>();
 
             // ---------------------------------------------- test -----------------------------------      
-            UpdateHighscores(null, null);
+            ImportHighscores();
 
             MaximizeBox = false;
             FormBorderStyle = FormBorderStyle.Fixed3D;
@@ -217,8 +217,7 @@ namespace ReaktionstesterInterface
                         // Messung valide
                         default:
                             labelStatus.Text = $"Reaktionszeit: {sMessage} ms.";
-                            oResults.Add(Convert.ToInt32(sMessage));
-                            UpdateSessionResults();
+                            UpdateResults(Convert.ToInt32(sMessage));
                             break;
                     }
 
@@ -228,28 +227,32 @@ namespace ReaktionstesterInterface
             catch { }
         }
 
-        private void UpdateSessionResults()
+        private void UpdateResults(int iTime)
         {
-            oResults = oResults.OrderBy(iNumber => iNumber).ToList();
-            listBoxResults.DataSource = (oResults.Count > 5) ? oResults.Take(5).ToList() : oResults;
-        }
+            string sName = textBoxName.Text;
 
-        private void UpdateHighscores(string name, List<int> results)
-        {
-            if (listBoxHighscores.Items.Count == 0)
-            {
-               oHighscores = Highscores.ReadFile().ParseHighscores();
-            }
-
-            if (textBoxName.Text.Contains('|'))
+            if (sName.Contains('|'))
             {
                 MessageBox.Show("Name enthält reserviertes Zeichen '|'. Bitte ändern Sie den Namen im Textfeld.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
-            if (textBoxName.Text == string.Empty)
+            if (sName == string.Empty)
             {
-                return;
+                sName = "Unknown";
             }
+
+            oResults = (Dictionary<string, int>)oResults.OrderBy(iNumber => iNumber.Value);
+                
+            listBoxResults.DataSource = (oResults.Count > 5) ? oResults.Take(5) : oResults;
+
+            oHighscores.UpdateHighscores(sName, iTime);
+        }
+
+
+        private void ImportHighscores()
+        {
+            oHighscores = Highscores.ReadFile().ParseHighscores();
+            listBoxHighscores.DataSource = oHighscores;
         }
 
         private async Task ReactionTest()
