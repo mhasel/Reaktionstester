@@ -207,6 +207,7 @@ namespace ReaktionstesterInterface
                     bAnswerReceived = true;
 
                     string sMessage = sBuffer.Substring(2, sBuffer.Length - 3);
+                    sBuffer = string.Empty;
 
                     switch (sMessage)
                     {
@@ -226,19 +227,18 @@ namespace ReaktionstesterInterface
                             UpdateResults(Convert.ToInt32(sMessage));
                             break;
                     }
-
-                    sBuffer = string.Empty;
                 }
             }
             catch (Exception oEx)
             {
                 ILogger.LogError(oEx.ToString());
-            };
+            }
         }
 
         private void UpdateResults(int iTime)
         {
             string sName = textBoxName.Text;
+            List<string> oDataSource = new List<string>();
 
             if (sName.Contains('|'))
             {
@@ -249,20 +249,30 @@ namespace ReaktionstesterInterface
             {
                 sName = "Unknown";
             }
+            oResults.UpdateHighscores(sName, iTime);
 
-            oResults = (Dictionary<string, int>)oResults.OrderBy(iNumber => iNumber.Value);
-                
-            listBoxResults.DataSource = (oResults.Count > 5) ? oResults.Take(5) : oResults;
+            foreach (KeyValuePair<string, int> oPair in oResults)
+            {
+                oDataSource.Add($"{oPair.Key}\t|\t{oPair.Value} ms");
+            }
 
-            oHighscores.UpdateHighscores(sName, iTime);
+            listBoxResults.DataSource = (oDataSource.Count > 5) ? oDataSource.Take(5) : oDataSource;
         }
 
-
+        /// <summary>
+        /// Import highscores from file
+        /// </summary>
         private void ImportHighscores()
         {
             List<string> oDataSource = new List<string>();
+
+            // File is parsed with custom extension methods.
             oHighscores = Highscores.ReadFile().ParseHighscores();
-            oHighscores = oHighscores.OrderBy(iNumber => iNumber.Value);
+
+            // Highscores should already be in order, as they are sorted whenever a new KeyValuePair is added, this is just to be safe.
+            // Dictionary is ordered ascendingly by value. Parameter type of lambda expressions is detected automatically ("Type inference feature"). Returns IOrderedEnumerable,
+            // which does not have a .ToDictionary extension, so it is first cast to a List<KeyValuePair<string,int>> which can then be cast to a dictionary.
+            oHighscores = oHighscores.OrderBy(iNumber => iNumber.Value).ToList().ToDictionary(sKey => sKey.Key, iValue => iValue.Value);
 
             foreach (KeyValuePair<string,int> oItem in oHighscores)
             {

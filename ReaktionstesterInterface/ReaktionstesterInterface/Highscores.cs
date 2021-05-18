@@ -10,8 +10,17 @@ namespace HighscoreFileHandling
 {
     public static class Highscores
     {
-        private static IExceptionLogger Logger = new ExceptionLogger();
-        public static void UpdateHighscores(this Dictionary<string, int> oDict, string sName, int iTime)
+        private static readonly ExceptionLogger Logger = new ExceptionLogger();
+
+        /// <summary>
+        /// Extends Dictionary<string,int>. Allows adding a new entry to dictionary, if there are duplicates, selects smallest value.
+        /// Dictionary is then sorted in ascending order and all but the lowest ten values are discarded.
+        /// </summary>
+        /// <param name="oDict">Dictionary to be extended, sorted and trimmed</param>
+        /// <param name="sName">Key of type string to be added</param>
+        /// <param name="iTime">Value of type integer to be added</param>
+        /// <returns>Dictionary<string, int> containing the 10 lowest values, sorted in ascending order.</returns>
+        public static Dictionary<string, int> UpdateHighscores(this Dictionary<string, int> oDict, string sName, int iTime)
         {
             if (oDict.ContainsKey(sName))
             {
@@ -30,8 +39,9 @@ namespace HighscoreFileHandling
             if (oDict.Count > 10)
             {
                 // TODO: TESTING
-                oDict = (Dictionary<string, int>)oDict.Take(10);
+                return (Dictionary<string, int>)oDict.Take(10);
             }
+            return oDict;
          }
 
         public static List<string> ReadFile(string sFilename = "Highscores.txt")
@@ -86,33 +96,33 @@ namespace HighscoreFileHandling
                          oDict.Add(sKey, Convert.ToInt32(sValue));
                      });
 
+                // same operation on list without lambdas:
+                /*
+                    string sKey;
+                    int iValue;
 
+                    foreach (string sItem in oList)
+                    {                
+                        if (sItem.Contains(cSeparator))
+                        {
+                            try
+                            {
+                                sKey = sItem.Substring(0, sItem.IndexOf(cSeparator));
+                                iValue = Convert.ToInt32(sItem.Substring(sItem.IndexOf(cSeparator) + 1));
+                                oDict.Add(sKey, iValue);
+                            }
+                            catch (Exception oEx)
+                            {
+                                Logger.LogError(oEx.ToString());
+                            }
+                        }
+                    }
+                */
             }
             catch (Exception oEx)
             {
                 Logger.LogError(oEx.ToString());
-            }
-
-            //// same code as above, without lambdas
-            //string sKey;
-            //int iValue;
-            //
-            //foreach (string sItem in oList)
-            //{                
-            //    if (sItem.Contains(cSeparator))
-            //    {
-            //        try
-            //        {
-            //            sKey = sItem.Substring(0, sItem.IndexOf(cSeparator));
-            //            iValue = Convert.ToInt32(sItem.Substring(sItem.IndexOf(cSeparator) + 1));
-            //            oDict.Add(sKey, iValue);
-            //        }
-            //        catch (Exception oEx)
-            //        {
-            //            Logger.LogError(oEx.ToString());
-            //        }
-            //    }
-            //}
+            }            
 
             return oDict;
         }

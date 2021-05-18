@@ -40,10 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExtendErrorLogger.cs" />
-    <Compile Include="IErrorLogger.cs" />
+    <Compile Include="ExtendExceptionLogger.cs" />
+    <Compile Include="IExceptionLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ErrorLogger.cs" />
+    <Compile Include="ExceptionLogger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

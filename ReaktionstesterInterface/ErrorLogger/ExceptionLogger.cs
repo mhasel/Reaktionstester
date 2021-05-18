@@ -7,7 +7,7 @@ namespace ErrorLogger
 {
     public class ExceptionLogger : IExceptionLogger
     {
-        public void Log(string sMessage, string sFilename = "Log.txt", bool bAddDateTime = true)
+        public void Log(string sMessage, string sFilename, bool bAddDateTime)
         {
             string sDirectoryPath;
             string sLogFilePath;
@@ -56,7 +56,7 @@ namespace ErrorLogger
             DirectoryCleanUp(sDirectoryPath);
         }
 
-        public void Log(string sMessage, string sMessageType, string sFilename, bool bAddDateTime = true)
+        public void Log(string sMessage, string sMessageType, string sFilename, bool bAddDateTime)
         {
             Log($"{ sMessageType}: {sMessage}", sFilename, bAddDateTime);
         }
@@ -65,7 +65,7 @@ namespace ErrorLogger
         {
             // selects all files in specified directory, filters them by the time of last access and deletes them if they have not been accessed in at least 1 month
             Directory.GetFiles(sPath)
-                     .Select(logFile => new FileInfo(logFile))
+                     .Select(sFilePath => new FileInfo(sFilePath))
                      .Where(logFile => logFile.LastAccessTime < DateTime.Now.AddMonths(-1))
                      .ToList()
                      .ForEach(logFile =>
