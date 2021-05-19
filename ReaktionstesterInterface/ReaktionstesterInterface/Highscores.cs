@@ -49,7 +49,7 @@ namespace HighscoreFileHandling
             string sReadLine;
             List<string> oLines = new List<string>();
 
-            if (File.Exists(sFilename) == false)
+            if (!File.Exists(sFilename))
             {
                 // TODO
                 return oLines;
@@ -79,45 +79,23 @@ namespace HighscoreFileHandling
 
             try
             {
-                // filter out possible invalid entries
+                // filter out invalid entries
                 oList = oList.Where(sItem => sItem.Contains(cSeparator)).ToList();
+
                 oList.ForEach(sItem =>
                      {
                          string sKey;
-                         string sValue;
-                         char[] cToTrim = new char[] { };     
+                         string sValue;   
                                              
-                         // divide string in list into key and value parts, divided by the separator character
+                         // split string into key and value parts, divided by the separator character
                          sKey = sItem.Substring(0, sItem.IndexOf(cSeparator)).Trim();
                          sValue = sItem.Substring(sItem.IndexOf(cSeparator));
                          // filter value string for digit characters (in case of suffix)
                          sValue = new string(sValue.Where(cChar => char.IsDigit(cChar)).ToArray());
+ 
                          // add new keyvaluepair to dictionary
                          oDict.Add(sKey, Convert.ToInt32(sValue));
                      });
-
-                // same operation on list without lambdas:
-                /*
-                    string sKey;
-                    int iValue;
-
-                    foreach (string sItem in oList)
-                    {                
-                        if (sItem.Contains(cSeparator))
-                        {
-                            try
-                            {
-                                sKey = sItem.Substring(0, sItem.IndexOf(cSeparator));
-                                iValue = Convert.ToInt32(sItem.Substring(sItem.IndexOf(cSeparator) + 1));
-                                oDict.Add(sKey, iValue);
-                            }
-                            catch (Exception oEx)
-                            {
-                                Logger.LogError(oEx.ToString());
-                            }
-                        }
-                    }
-                */
             }
             catch (Exception oEx)
             {
@@ -127,12 +105,14 @@ namespace HighscoreFileHandling
             return oDict;
         }
 
-        public static void WriteFile
-        (
-            this Dictionary<string, int> oDict,
-            string sFilename = "Highscores.txt",
-            char cSeparator = '|'
-        )
+
+        // formatting?
+        public static void WriteFile 
+            (
+                this Dictionary<string, int> oDict, 
+                string sFilename = "Highscores.txt",
+                char cSeparator = '|'
+            )
         {
             try
             {

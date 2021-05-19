@@ -132,7 +132,7 @@
             this.flowLayoutPanel.Controls.Add(this.groupBoxName);
             this.flowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel.Location = new System.Drawing.Point(0, 28);
-            this.flowLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel.Name = "flowLayoutPanel";
             this.flowLayoutPanel.Size = new System.Drawing.Size(548, 643);
             this.flowLayoutPanel.TabIndex = 2;
@@ -141,7 +141,7 @@
             // 
             this.pictureBoxCountdown1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.pictureBoxCountdown1.Location = new System.Drawing.Point(4, 4);
-            this.pictureBoxCountdown1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBoxCountdown1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBoxCountdown1.Name = "pictureBoxCountdown1";
             this.pictureBoxCountdown1.Size = new System.Drawing.Size(173, 138);
             this.pictureBoxCountdown1.TabIndex = 1;
@@ -151,7 +151,7 @@
             // 
             this.pictureBoxCountdown2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.pictureBoxCountdown2.Location = new System.Drawing.Point(185, 4);
-            this.pictureBoxCountdown2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBoxCountdown2.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBoxCountdown2.Name = "pictureBoxCountdown2";
             this.pictureBoxCountdown2.Size = new System.Drawing.Size(173, 138);
             this.pictureBoxCountdown2.TabIndex = 0;
@@ -161,7 +161,7 @@
             // 
             this.pictureBoxCountdown3.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.pictureBoxCountdown3.Location = new System.Drawing.Point(366, 4);
-            this.pictureBoxCountdown3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBoxCountdown3.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBoxCountdown3.Name = "pictureBoxCountdown3";
             this.pictureBoxCountdown3.Size = new System.Drawing.Size(173, 138);
             this.pictureBoxCountdown3.TabIndex = 2;
@@ -183,7 +183,7 @@
             // 
             this.buttonStart.Font = new System.Drawing.Font("Calibri", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonStart.Location = new System.Drawing.Point(4, 273);
-            this.buttonStart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonStart.Margin = new System.Windows.Forms.Padding(4);
             this.buttonStart.Name = "buttonStart";
             this.buttonStart.Size = new System.Drawing.Size(536, 123);
             this.buttonStart.TabIndex = 3;
@@ -196,9 +196,9 @@
             this.groupBoxName.Controls.Add(this.textBoxName);
             this.groupBoxName.Controls.Add(this.groupBoxTop);
             this.groupBoxName.Location = new System.Drawing.Point(4, 404);
-            this.groupBoxName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBoxName.Margin = new System.Windows.Forms.Padding(4);
             this.groupBoxName.Name = "groupBoxName";
-            this.groupBoxName.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBoxName.Padding = new System.Windows.Forms.Padding(4);
             this.groupBoxName.Size = new System.Drawing.Size(544, 218);
             this.groupBoxName.TabIndex = 2;
             this.groupBoxName.TabStop = false;
@@ -207,7 +207,7 @@
             // textBoxName
             // 
             this.textBoxName.Location = new System.Drawing.Point(13, 25);
-            this.textBoxName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxName.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(512, 22);
             this.textBoxName.TabIndex = 6;
@@ -223,7 +223,7 @@
             this.groupBoxTop.Size = new System.Drawing.Size(536, 167);
             this.groupBoxTop.TabIndex = 5;
             this.groupBoxTop.TabStop = false;
-            this.groupBoxTop.Text = "Bestenliste";
+            this.groupBoxTop.Text = "Ergebnisse";
             // 
             // tabControl
             // 
@@ -246,7 +246,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage1.Size = new System.Drawing.Size(522, 119);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "Seit Programmstart:";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // listBoxResults
@@ -255,7 +255,7 @@
             this.listBoxResults.FormattingEnabled = true;
             this.listBoxResults.ItemHeight = 16;
             this.listBoxResults.Location = new System.Drawing.Point(3, 2);
-            this.listBoxResults.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listBoxResults.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxResults.Name = "listBoxResults";
             this.listBoxResults.SelectionMode = System.Windows.Forms.SelectionMode.None;
             this.listBoxResults.Size = new System.Drawing.Size(516, 115);
@@ -268,9 +268,9 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Size = new System.Drawing.Size(523, 117);
+            this.tabPage2.Size = new System.Drawing.Size(522, 119);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.Text = "Bestenliste:";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // listBoxHighscores
@@ -279,10 +279,10 @@
             this.listBoxHighscores.FormattingEnabled = true;
             this.listBoxHighscores.ItemHeight = 16;
             this.listBoxHighscores.Location = new System.Drawing.Point(3, 2);
-            this.listBoxHighscores.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listBoxHighscores.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxHighscores.Name = "listBoxHighscores";
             this.listBoxHighscores.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.listBoxHighscores.Size = new System.Drawing.Size(517, 113);
+            this.listBoxHighscores.Size = new System.Drawing.Size(516, 115);
             this.listBoxHighscores.TabIndex = 1;
             // 
             // FormMain
@@ -293,7 +293,7 @@
             this.Controls.Add(this.flowLayoutPanel);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMain";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

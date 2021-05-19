@@ -21,8 +21,7 @@ namespace ErrorLogger
             // gets the current directory of the executing assembly and adds a verbatim string to access a sub-folder
             sDirectoryPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\logs\";
             sLogFilePath = sDirectoryPath + sFilename;
-
-
+            
             if (File.Exists(sLogFilePath))
             {
                 string sReadLine;
@@ -38,10 +37,10 @@ namespace ErrorLogger
                 }
                 catch (Exception)
                 {
-                    // TODO: if logger throws exception, then what? just ignore?
+                    // TODO: if logger throws exception, then what?
                 }
             }
-            else if (Directory.Exists(sDirectoryPath) == false)
+            else if (!Directory.Exists(sDirectoryPath))
             {
                 Directory.CreateDirectory(sDirectoryPath);
             }

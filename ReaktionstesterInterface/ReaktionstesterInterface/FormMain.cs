@@ -15,58 +15,52 @@ namespace ReaktionstesterInterface
     public partial class FormMain : Form
     {
         private delegate void oDataReceivedDeleg(char cReceived);
-
         private IExceptionLogger ILogger = new ExceptionLogger();
         private string sBuffer;
         private FormRS232 oSetupRS232;
         private readonly SerialPort serialPortToPsoC;
-        private readonly Random oRandom;
         private bool bAnswerReceived;
         private string sName;
         private Dictionary<string, int> oResults;
         private Dictionary<string, int> oHighscores;
-
+        
         public FormMain()
         {
             InitializeComponent();
-
-            oRandom = new Random();
-            // SerialPort und Setupform initialisieren und SerialPort object an Konstruktor mitübergeben
+            // initialize fields
+            oResults = new Dictionary<string, int>();
             serialPortToPsoC = new SerialPort("COM3", 9600, Parity.None, 8, StopBits.One);
             oSetupRS232 = new FormRS232(serialPortToPsoC);
+            // subscribe SerialPort DataReceived method to corresponding event handler
             serialPortToPsoC.DataReceived += new SerialDataReceivedEventHandler(SerialPortToPsoC_DataReceived);
 
-            oResults = new Dictionary<string, int>();
+            // disable RS232 options until a port connection has successfully been opened
+            toolStripMenuItemClose.Enabled = false;
+            toolStripMenuItemOpen.Enabled = false;
 
-            // ---------------------------------------------- test -----------------------------------      
-            ImportHighscores();
-
+            // dynamically assign control properties upon instance creation. could also be done in designer.
             MaximizeBox = false;
             FormBorderStyle = FormBorderStyle.Fixed3D;
             labelStatus.Text = "Sobald alle 3 Kästchen grün leuchten, Taste am PsoC drücken.";
 
-            // Menüpunkte "ausgrauen" bis RS232 Setup ausgeführt wurde
-            toolStripMenuItemClose.Enabled = false;
-            toolStripMenuItemOpen.Enabled = false;
 
-            tabControl.TabPages[0].Text = "seit Programmstart:";
-            tabControl.TabPages[1].Text = "aller Zeiten:";
+            // ---------------------------------------------- test -----------------------------------      
+            ImportHighscores();
         }
 
         #region //StripMenu------------------------------------------------------------------//
         private void ToolStripMenuItemSetup_Click(object sender, EventArgs e)
         {
-            // Überprüft, ob Instanz der Form existiert bzw. ob die Objekteferenz der Form bereits aus dem Speicher entfernt wurde
-            // Notwendig, um ObjectDisposedException zu vermeiden
+            // Check whether the object instance still exists or if its reference has already been disposed from memory
+            // Prevents "ObjectDisposedException"
             if (oSetupRS232 == null || oSetupRS232.IsDisposed)
             {
-                // Falls vorherige Instanz geschlossen wurde, neue Instanz öffnen und diese als
-                // Listener für FormClosedEventHandler hinzufügen
+                // If previous instance has been closed, create new one and add it as listener to FormClosed event
                 oSetupRS232 = new FormRS232(serialPortToPsoC);
                 oSetupRS232.FormClosed += new FormClosedEventHandler(FormRS232_Closed);
             }
 
-            // Form als Dialog anzeigen
+            // Show setup form as dialog and enable/disable stripmenu options according to the result
             oSetupRS232.ShowDialog();
             if (oSetupRS232.DialogResult == DialogResult.OK)
             {
@@ -90,7 +84,6 @@ namespace ReaktionstesterInterface
         {
             try
             {
-                // Überprüft, ob serial port bereits offen ist
                 if (!serialPortToPsoC.IsOpen)
                 {
                     serialPortToPsoC.Open();
@@ -178,7 +171,7 @@ namespace ReaktionstesterInterface
             {
                 //throw new Exception("Test-exception");
 
-                if (serialPortToPsoC.IsOpen == false)
+                if (!serialPortToPsoC.IsOpen)
                 {
                     labelStatus.Text = "Port nicht geöffnet.";
                     buttonStart.Enabled = true;
@@ -190,7 +183,7 @@ namespace ReaktionstesterInterface
                 await Task.Run(async () =>
                 {
                     await ReactionTest();
-                });
+                });                
             }
             catch (Exception oEx)
             {
@@ -211,17 +204,17 @@ namespace ReaktionstesterInterface
 
                     switch (sMessage)
                     {
-                        // Taste gehalten
+                        // button was pressed early
                         case "-2":
                             labelStatus.Text = "Knopf gedrückt halten gilt nicht :)";
                             break;
 
-                        // Taste nicht gedrückt
+                        // button wasn't pressed
                         case "-1":
                             labelStatus.Text = "Knopf nicht gedrückt.";
                             break;
 
-                        // Messung valide
+                        // valid measurement
                         default:
                             labelStatus.Text = $"Reaktionszeit: {sMessage} ms.";
                             UpdateResults(Convert.ToInt32(sMessage));
@@ -272,7 +265,7 @@ namespace ReaktionstesterInterface
             // Highscores should already be in order, as they are sorted whenever a new KeyValuePair is added, this is just to be safe.
             // Dictionary is ordered ascendingly by value. Parameter type of lambda expressions is detected automatically ("Type inference feature"). Returns IOrderedEnumerable,
             // which does not have a .ToDictionary extension, so it is first cast to a List<KeyValuePair<string,int>> which can then be cast to a dictionary.
-            oHighscores = oHighscores.OrderBy(iNumber => iNumber.Value).ToList().ToDictionary(sKey => sKey.Key, iValue => iValue.Value);
+            oHighscores = oHighscores.OrderBy(oKVPair => oKVPair.Value).ToList().ToDictionary(sKey => sKey.Key, iValue => iValue.Value);
 
             foreach (KeyValuePair<string,int> oItem in oHighscores)
             {
@@ -291,7 +284,7 @@ namespace ReaktionstesterInterface
                     oBox.BackColor = Color.Red;
                 }));
             }
-
+            
             for (int iCountdown = 3; iCountdown >= 0; iCountdown--)
             {
                 serialPortToPsoC.Write(iCountdown.ToString());
@@ -338,7 +331,7 @@ namespace ReaktionstesterInterface
                 await Task.Delay(1000);
             }
 
-            await Task.Delay(1000 + oRandom.Next(1000));
+            await Task.Delay(1000 + new Random().Next(1000));
 
             foreach (PictureBox oBox in flowLayoutPanel.Controls.OfType<PictureBox>())
             {
@@ -368,7 +361,7 @@ namespace ReaktionstesterInterface
                 }
                 catch (OperationCanceledException)
                 {
-                    // timeout
+                    // no answer -> timeout
                     MessageBox.Show("Zeitüberschreitung. Keine Antwort von PsoC.");
                 }
                 catch (Exception oEx)

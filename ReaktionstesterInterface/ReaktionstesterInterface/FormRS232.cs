@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace UART_RS232
@@ -14,19 +7,16 @@ namespace UART_RS232
     {
         private readonly System.IO.Ports.SerialPort oPort;
 
-        /// <summary>
-        /// Constructor
-        /// Initialisiert FormRS232 und Komponenten.
-        /// </summary>
-        /// <param name="serialPort">Instanz der SerialPort Klasse für UART Verbindung.</param>
         public FormRS232(System.IO.Ports.SerialPort serialPort)
         {
             InitializeComponent();
 
-            // Speicheradresse von serialPort auch an oPort zuweisen
+            // Assign instance of SerialPort class that was passed via constructor to local instance 
+            // (both instances now point to the same location/address in heap memory)
             oPort = serialPort;
 
             ButtonRefresh_Click(null, null);
+            KeyPreview = true;
 
             // default Parameter auswählen
             comboBoxRate.SelectedIndex = 0;
@@ -40,7 +30,7 @@ namespace UART_RS232
         }
 
         /// <summary>
-        /// Einstellungen von Setup übernehmen.
+        /// Confirm setup-option selection
         /// </summary>
         private void ButtonOK_Click(object sender, EventArgs e)
         {
@@ -81,11 +71,11 @@ namespace UART_RS232
         }
 
         /// <summary>
-        /// Einstellungen verwerfen
+        /// Discard changes
         /// </summary>
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
-            // eingestellte Parameter verwerfen
+            // reset displayed selection to actual selection
             comboBoxPort.Text = oPort.PortName;
             comboBoxRate.Text = Convert.ToString(oPort.BaudRate);
             comboBoxDataBits.Text = Convert.ToString(oPort.DataBits);
@@ -108,13 +98,13 @@ namespace UART_RS232
         }
         
         /// <summary>
-        /// Aktive Ports aktualisieren.
+        /// Refresh available ports
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ButtonRefresh_Click(object sender, EventArgs e)
         {
-            // combobox items (collection) um einträge zu ändern
+            // get currently available ports and add them to port-combobox
             string[] sActivePorts = System.IO.Ports.SerialPort.GetPortNames();
 
             comboBoxPort.Items.Clear();
@@ -124,6 +114,7 @@ namespace UART_RS232
                 comboBoxPort.Items.Add(sPort);
             }
 
+            // disable all menu options if no ports are available
             if (sActivePorts.Length == 0)
             {
                 comboBoxPort.Enabled = false;
@@ -137,6 +128,14 @@ namespace UART_RS232
                 comboBoxRate.Enabled = true;
                 comboBoxDataBits.Enabled = true;
                 comboBoxParity.Enabled = true;
+            }
+        }
+
+        private void FormRS232_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                ButtonCancel_Click(null, null);
             }
         }
     }
