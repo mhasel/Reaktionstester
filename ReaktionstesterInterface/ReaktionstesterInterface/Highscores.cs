@@ -14,7 +14,7 @@ namespace HighscoreFileHandling
 
         /// <summary>
         /// Extends Dictionary<string,int>. Allows adding a new entry to dictionary, if there are duplicates, selects smallest value.
-        /// Dictionary is then sorted in ascending order and all but the lowest ten values are discarded.
+        /// Dictionary is then sorted in ascending order and all but the lowest (=best) ten values are discarded.
         /// </summary>
         /// <param name="oDict">Dictionary to be extended, sorted and trimmed</param>
         /// <param name="sName">Key of type string to be added</param>
@@ -34,12 +34,21 @@ namespace HighscoreFileHandling
                 oDict.Add(sName, iTime);
             }
 
-            oDict = oDict.OrderBy(oKeyValuePair => oKeyValuePair.Value).ToDictionary(sKey => sKey.Key, iValue => iValue.Value);
+            oDict = oDict.OrderBy(oKeyValuePair => oKeyValuePair.Value)
+                         .ToDictionary(oKVP => oKVP.Key, oKVP => oKVP.Value);
             
             if (oDict.Count > 10)
             {
-                // TODO: TESTING
-                return (Dictionary<string, int>)oDict.Take(10);
+                // TODO: testing
+                oDict.Skip(10)
+                     .ToList()
+                     .ForEach(oKVP =>
+                     {
+                         oDict.Remove(oKVP.Key);
+                     });
+
+                //oDict = oDict.Take(10)
+                //             .ToDictionary(oKVP => oKVP.Key, oKVP => oKVP.Value);
             }
             return oDict;
          }
@@ -86,7 +95,7 @@ namespace HighscoreFileHandling
                      {
                          string sKey;
                          string sValue;   
-                                             
+                                                                      
                          // split string into key and value parts, divided by the separator character
                          sKey = sItem.Substring(0, sItem.IndexOf(cSeparator)).Trim();
                          sValue = sItem.Substring(sItem.IndexOf(cSeparator));
