@@ -5,7 +5,7 @@ namespace UART_RS232
 {
     public partial class FormRS232 : Form
     {
-        private readonly System.IO.Ports.SerialPort oPort;
+        readonly System.IO.Ports.SerialPort oPort;
 
         public FormRS232(System.IO.Ports.SerialPort serialPort)
         {
@@ -34,7 +34,6 @@ namespace UART_RS232
         /// </summary>
         private void ButtonOK_Click(object sender, EventArgs e)
         {
-            // eingestellte Parameter übernehmen
             if (comboBoxPort.Text == string.Empty)
             {
                 MessageBox.Show("Portname darf nicht leer sein.", "Error:", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace ErrorLogger
 {
+    /// <summary>
+    /// This class is used to write messages to file. It is intended for error logging.
+    /// </summary>
     public class ExceptionLogger : IExceptionLogger
     {
         public void Log(string sMessage, string sFilename, bool bAddDateTime)
@@ -35,10 +38,7 @@ namespace ErrorLogger
                         }
                     }
                 }
-                catch (Exception)
-                {
-                    // TODO: if logger throws exception, then what?
-                }
+                catch { }
             }
             else if (!Directory.Exists(sDirectoryPath))
             {

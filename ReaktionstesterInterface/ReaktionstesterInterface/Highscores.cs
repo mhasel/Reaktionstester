@@ -10,7 +10,7 @@ namespace HighscoreFileHandling
 {
     public static class Highscores
     {
-        private static readonly ExceptionLogger Logger = new ExceptionLogger();
+        static readonly ExceptionLogger Logger = new ExceptionLogger();
 
         /// <summary>
         /// Extends Dictionary<string,int>. Allows adding a new entry to dictionary, if there are duplicates, selects smallest value.
@@ -24,7 +24,7 @@ namespace HighscoreFileHandling
         {
             if (oDict.ContainsKey(sName))
             {
-                if(oDict[sName].CompareTo(iTime) < 0)
+                if(oDict[sName].CompareTo(iTime) > 0)
                 {
                     oDict[sName] = iTime;
                 }
@@ -38,21 +38,26 @@ namespace HighscoreFileHandling
                          .ToDictionary(oKVP => oKVP.Key, oKVP => oKVP.Value);
             
             if (oDict.Count > 10)
-            {
-                // TODO: testing
-                oDict.Skip(10)
-                     .ToList()
-                     .ForEach(oKVP =>
-                     {
-                         oDict.Remove(oKVP.Key);
-                     });
+            {    
+                oDict = oDict.Take(10)
+                             .ToDictionary(oKVP => oKVP.Key, oKVP => oKVP.Value);
 
-                //oDict = oDict.Take(10)
-                //             .ToDictionary(oKVP => oKVP.Key, oKVP => oKVP.Value);
+                //// different approach, same result:
+                //oDict.Skip(10)
+                //     .ToList()
+                //     .ForEach(oKVP =>
+                //     {
+                //         oDict.Remove(oKVP.Key);
+                //     });
             }
             return oDict;
          }
 
+        /// <summary>
+        /// Import highscores from file.
+        /// </summary>
+        /// <param name="sFilename">Name of file to import.</param>
+        /// <returns>List containing each line of imported file.</returns>
         public static List<string> ReadFile(string sFilename = "Highscores.txt")
         {
             string sReadLine;
@@ -60,7 +65,6 @@ namespace HighscoreFileHandling
 
             if (!File.Exists(sFilename))
             {
-                // TODO
                 return oLines;
             }
 
@@ -82,6 +86,12 @@ namespace HighscoreFileHandling
             return oLines;
         }
 
+        /// <summary>
+        /// This method is used to parse a list of strings containing highscores in the format of name, seperator, time
+        /// </summary>
+        /// <param name="oList">The list to parse.</param>
+        /// <param name="cSeparator">Character that is used to separate name and time</param>
+        /// <returns>A dictionary containing the name as key and the time as value.</returns>
         public static Dictionary<string, int> ParseHighscores(this List<string> oList, char cSeparator = '|')
         {
             Dictionary<string, int> oDict = new Dictionary<string, int>();            
@@ -113,15 +123,14 @@ namespace HighscoreFileHandling
 
             return oDict;
         }
-
-
-        // formatting?
-        public static void WriteFile 
-            (
-                this Dictionary<string, int> oDict, 
-                string sFilename = "Highscores.txt",
-                char cSeparator = '|'
-            )
+        
+        /// <summary>
+        /// Write highscores to file.
+        /// </summary>
+        /// <param name="oDict">The dictionary containing highscores.</param>
+        /// <param name="sFilename">Name of the file to write to.</param>
+        /// <param name="cSeparator">Character separating name(key) and time(value).</param>
+        public static void WriteFile (this Dictionary<string, int> oDict, string sFilename = "Highscores.txt", char cSeparator = '|')
         {
             try
             {

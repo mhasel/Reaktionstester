@@ -14,15 +14,15 @@ namespace ReaktionstesterInterface
 {
     public partial class FormMain : Form
     {
-        private delegate void oDataReceivedDeleg(char cReceived);
-        private IExceptionLogger ILogger = new ExceptionLogger();
-        private string sBuffer;
-        private FormRS232 oSetupRS232;
-        private readonly SerialPort serialPortToPsoC;
-        private bool bAnswerReceived;
-        private string sName;
-        private Dictionary<string, int> oResults;
-        private Dictionary<string, int> oHighscores;
+        delegate void oDataReceivedDeleg(char cReceived);
+        IExceptionLogger ILogger = new ExceptionLogger();
+        string sBuffer;
+        FormRS232 oSetupRS232;
+        readonly SerialPort serialPortToPsoC;
+        bool bAnswerReceived;
+        string sName;
+        Dictionary<string, int> oResults;
+        Dictionary<string, int> oHighscores;
         
         public FormMain()
         {
@@ -41,7 +41,7 @@ namespace ReaktionstesterInterface
             // dynamically assign control properties upon instance creation. could also be done in designer.
             MaximizeBox = false;
             FormBorderStyle = FormBorderStyle.Fixed3D;
-            labelStatus.Text = "Sobald alle 3 Kästchen grün leuchten, Taste am PsoC drücken.";
+            labelStatus.Text = "Statusanzeige";
 
 
             // ---------------------------------------------- test -----------------------------------      
@@ -162,6 +162,9 @@ namespace ReaktionstesterInterface
         #endregion
 
         #region //reaction test--------------------------------------------------------------//
+        /// <summary>
+        /// Starts the reaction test.
+        /// </summary>
         private async void ButtonStart_Click(object sender, EventArgs e)
         {
             buttonStart.Enabled = false;
@@ -169,8 +172,6 @@ namespace ReaktionstesterInterface
 
             try
             {
-                //throw new Exception("Test-exception");
-
                 if (!serialPortToPsoC.IsOpen)
                 {
                     labelStatus.Text = "Port nicht geöffnet.";
@@ -182,7 +183,7 @@ namespace ReaktionstesterInterface
 
                 await Task.Run(async () =>
                 {
-                    await ReactionTest();
+                    await ReactionTestCountdown();
                 });                
             }
             catch (Exception oEx)
@@ -191,6 +192,9 @@ namespace ReaktionstesterInterface
             };            
         }
 
+        /// <summary>
+        /// Checks if data received from PSoC is valid/fits the required protocol format and updates the result display in the GUI.
+        /// </summary>
         private void DisplayResult()
         {
             try
@@ -228,28 +232,46 @@ namespace ReaktionstesterInterface
             }
         }
 
+        /// <summary>
+        /// Updates the session scoreboard and displays the top 5 in listbox.
+        /// </summary>
+        /// <param name="iTime">Reactiontime in milliseconds</param>
         private void UpdateResults(int iTime)
         {
             string sName = textBoxName.Text;
-            List<string> oDataSource = new List<string>();
+            List<string> oSessionDataSource = new List<string>();
+            List<string> oAllTimeDataSource = new List<string>();
 
             if (sName.Contains('|'))
             {
-                MessageBox.Show("Name enthält reserviertes Zeichen '|'. Bitte ändern Sie den Namen im Textfeld.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Name enthält reserviertes Zeichen '|'. Bitte ändern Sie den Namen im Textfeld.", "Warnung", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             if (sName == string.Empty)
             {
                 sName = "Unknown";
             }
-            oResults.UpdateHighscores(sName, iTime);
+
+            oResults = oResults.UpdateHighscores(sName, iTime);
+            oHighscores = oHighscores.UpdateHighscores(sName, iTime);
 
             foreach (KeyValuePair<string, int> oPair in oResults)
             {
-                oDataSource.Add($"{oPair.Key}\t|\t{oPair.Value} ms");
+                oSessionDataSource.Add($"{oPair.Key}\t\t|\t{oPair.Value} ms");
             }
 
-            listBoxResults.DataSource = (oDataSource.Count > 5) ? oDataSource.Take(5) : oDataSource;
+            foreach (KeyValuePair<string, int> oPair in oHighscores)
+            {
+                oAllTimeDataSource.Add($"{oPair.Key}\t\t|\t{oPair.Value} ms");
+            }
+
+            if (oSessionDataSource.Count > 5)
+            {
+                oSessionDataSource = oSessionDataSource.Take(5).ToList();
+            }
+
+            listBoxResults.DataSource = oSessionDataSource;
+            listBoxHighscores.DataSource = oAllTimeDataSource;
         }
 
         /// <summary>
@@ -269,13 +291,17 @@ namespace ReaktionstesterInterface
 
             foreach (KeyValuePair<string,int> oItem in oHighscores)
             {
-                oDataSource.Add($"{oItem.Key}\t|\t{oItem.Value.ToString()} ms");
+                oDataSource.Add($"{oItem.Key}\t|\t{oItem.Value} ms");
             }
 
             listBoxHighscores.DataSource = oDataSource;
         }
 
-        private async Task ReactionTest()
+        /// <summary>
+        /// This method implements the countdown.
+        /// It handles sending commands to the PSoC and updating GUI elements. 
+        /// </summary>
+        private async Task ReactionTestCountdown()
         {
             foreach (PictureBox oBox in flowLayoutPanel.Controls.OfType<PictureBox>())
             {
@@ -287,7 +313,14 @@ namespace ReaktionstesterInterface
             
             for (int iCountdown = 3; iCountdown >= 0; iCountdown--)
             {
-                serialPortToPsoC.Write(iCountdown.ToString());
+                try
+                {
+                    serialPortToPsoC.Write(iCountdown.ToString());
+                }
+                catch(Exception oEx)
+                {
+                    ILogger.LogError(oEx.ToString());
+                }
                 labelStatus.Invoke(new Action(() =>
                 {
                     if (iCountdown > 0)
@@ -340,8 +373,14 @@ namespace ReaktionstesterInterface
                     oBox.BackColor = Color.LimeGreen;
                 }));
             }
-
-            serialPortToPsoC.Write("g");
+            try
+            {
+                serialPortToPsoC.Write("g");
+            }
+            catch (Exception oEx)
+            {
+                ILogger.LogError(oEx.ToString());
+            }            
 
             labelStatus.Invoke(new Action(() =>
             {
@@ -362,46 +401,53 @@ namespace ReaktionstesterInterface
                 catch (OperationCanceledException)
                 {
                     // no answer -> timeout
-                    MessageBox.Show("Zeitüberschreitung. Keine Antwort von PsoC.");
+                    labelStatus.Invoke(new Action(() =>
+                    {
+                        labelStatus.Text = "Zeitüberschreitung. Keine Antwort von PsoC." + Environment.NewLine + "Bitte überprüfe die Verbindung!";
+                    }));
                 }
                 catch (Exception oEx)
                 {
                     ILogger.LogError(oEx.ToString());
                 }
-                finally
+
+                foreach (PictureBox oBox in flowLayoutPanel.Controls.OfType<PictureBox>())
                 {
-                    foreach (PictureBox oBox in flowLayoutPanel.Controls.OfType<PictureBox>())
+                    oBox.Invoke(new Action(() =>
                     {
-                        oBox.Invoke(new Action(() =>
-                        {
-                            oBox.BackColor = Color.Gray;
-                        }));
-                    }
-
-                    buttonStart.Invoke(new Action(() =>
-                    {
-                        buttonStart.Enabled = true;
-                    }));
-
-                    labelStatus.Invoke(new Action(() =>
-                    {
-                        labelStatus.Text = "Sobald alle 3 Kästchen grün leuchten, Taste am PsoC drücken.";
+                        oBox.BackColor = Color.Gray;
                     }));
                 }
+
+                buttonStart.Invoke(new Action(() =>
+                {
+                    buttonStart.Enabled = true;
+                }));
+
+                if (bAnswerReceived)
+                {
+                    labelStatus.Invoke(new Action(() =>
+                    {
+                        labelStatus.Text = "Statusanzeige";
+                    }));
+                }                
             }));
         }
+
         private void TextBoxName_TextChanged(object sender, EventArgs e)
         {
             sName = textBoxName.Text;
         }
         #endregion
 
+        /// <summary>
+        /// Write highscores to file upon form closing.
+        /// </summary>
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             try
             {
                 oHighscores.WriteFile();
-                // throw new Exception();
             }
             catch(Exception oEx)
             {
