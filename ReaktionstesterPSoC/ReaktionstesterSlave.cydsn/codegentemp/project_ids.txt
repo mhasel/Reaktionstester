@@ -1,0 +1,6 @@
+C:\Users\Michi\Source\Repos\PsoC\Reaktionstester\ReaktionstesterSlave.cydsn\ReaktionstesterSlave.cyprj|f189c0da-e9c6-47d6-8542-d252bddb2364
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|16908e31-3669-410e-a1e2-ddbe6b9be036
+C:\Users\Michi\Documents\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|cc0fd2b8-6574-4c4d-ba1d-098689f06c09
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|b97d3160-9f58-4291-8c45-913a9abf4c46
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|a66d4bd0-61fc-489c-b3b7-c58c0f904330
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|0318552d-2dd5-4e2e-a1b0-ef95ce2ad3cb

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CyXmlSerializer>
+<!--This file is machine generated and read. It is not intended to be edited by hand.-->
+<!--Due to this, there is no schema for this file.-->
+<CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWrkspcCustomData" version="4">
+<CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997 type_name="CyDesigner.Common.Base.CyCustomData" version="2">
+<userData>
+<dataGuid v="1b906a0f-a7b6-4e4d-a428-82f98b53cb35">
+<CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35 type_name="CyDesigner.Common.ProjMgmt.GUI.CyExplorerWindow+CyExplorerWindowState" version="3" SelectedTab="Source">
+<TreeKeys>
+<v>Source</v>
+<v>Components</v>
+<v>Output</v>
+</TreeKeys>
+<TreeStates>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="ReaktionstesterSlave">
+<ExpandedNodeIds>
+<v>ReaktionstesterSlave</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\TopDesign</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\ReaktionstesterSlave.cydwr</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Header Files</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Source Files</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>ReaktionstesterSlave</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\TopDesign</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\ReaktionstesterSlave.cydwr</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\ReaktionstesterSlave.cydwr\Pins</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\ReaktionstesterSlave.cydwr\Analog</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\ReaktionstesterSlave.cydwr\Clocks</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\ReaktionstesterSlave.cydwr\Interrupts</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\ReaktionstesterSlave.cydwr\DMA</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\ReaktionstesterSlave.cydwr\System</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\ReaktionstesterSlave.cydwr\Directives</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\ReaktionstesterSlave.cydwr\Flash Security</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\ReaktionstesterSlave.cydwr\EEPROM</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Header Files</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Header Files\cyapicallbacks.h</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Source Files</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Source Files\main.c</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\Clock_1KHz</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\Control_Reg_Timer</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\cy_boot</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\Em_EEPROM_Dynamic</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\isr_Timer</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\Pin_Button</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\Pin_LED0</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\Pin_LED1</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\Pin_LED2</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\Pin_LED3</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\PRS</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\Timer_Interrupt</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\UART_PC</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\UART_PC_IntClock</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\cycodeshareexport.ld</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\cycodeshareimport.ld</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\cycodeshareimport.scat</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\cydevice.h</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\cydevice_trm.h</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\cydevicegnu.inc</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\cydevicegnu_trm.inc</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\cydeviceiar.inc</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\Generated_Source\PSoC5\cydeviceiar_trm.inc</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>ReaktionstesterSlave</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\TopDesign</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\TopDesign\TopDesign.cysch</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>ReaktionstesterSlave</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\TopDesign</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\TopDesign\TopDesign.cysch</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>ReaktionstesterSlave</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_1KHz.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Control_Reg_Timer.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Control_Reg_Timer_PM.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\CyDmac.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\CySpc.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_Timer.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_Button.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_LED0.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_LED1.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_LED2.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_LED3.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\PRS.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\PRS_PM.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_Interrupt.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_Interrupt_PM.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_PC.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_PC_BOOT.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_PC_INT.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_PC_IntClock.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_PC_PM.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\ReaktionstesterSlave.elf</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\ReaktionstesterSlave.hex</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\ReaktionstesterSlave.map</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\ReaktionstesterSlave.gpdsc</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\ReaktionstesterSlave.rpt</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\ReaktionstesterSlave_timing.html</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>ReaktionstesterSlave</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_1KHz.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Control_Reg_Timer.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Control_Reg_Timer_PM.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\CyDmac.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\CySpc.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_Timer.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_Button.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_LED0.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_LED1.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_LED2.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_LED3.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\PRS.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\PRS_PM.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_Interrupt.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_Interrupt_PM.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_PC.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_PC_BOOT.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_PC_INT.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_PC_IntClock.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_PC_PM.lst</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\ReaktionstesterSlave.elf</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\ReaktionstesterSlave.hex</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CortexM3\ARM_GCC_541\Debug\ReaktionstesterSlave.map</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\ReaktionstesterSlave.gpdsc</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\ReaktionstesterSlave.rpt</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\ReaktionstesterSlave_timing.html</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStates>
+<TreeKeysV2>
+<v>Datasheet</v>
+</TreeKeysV2>
+<TreeStatesV2>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>ReaktionstesterSlave</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\PSoC 5LP Architecture TRM</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CY8C58LP Family Datasheet</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\System Reference Guides</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>ReaktionstesterSlave</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\PSoC 5LP Architecture TRM</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\CY8C58LP Family Datasheet</v>
+<v>ReaktionstesterSlave\ReaktionstesterSlave\System Reference Guides</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStatesV2>
+</CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35>
+</dataGuid>
+<dataGuid v="5f2be1a5-0687-4501-bb8c-cf21cb8211bf">
+<CyGuid_5f2be1a5-0687-4501-bb8c-cf21cb8211bf type_name="CyDesigner.Common.ProjMgmt.GUI.CyBookmarkData" version="1">
+<indicators />
+</CyGuid_5f2be1a5-0687-4501-bb8c-cf21cb8211bf>
+</dataGuid>
+</userData>
+</CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
+<Unloaded />
+<OpenDocs>
+<name v=".\ReaktionstesterSlave.cydsn\main.c" />
+<name v=".\ReaktionstesterSlave.cydsn\TopDesign\TopDesign.cysch" />
+</OpenDocs>
+<OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
+
+  Actipro Docking/MDI for WinForms
+  Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
+  http://www.actiprosoftware.com
+
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="2011, 1071" SelectedTabbedMdiWindow="aca1374c-b4cc-4704-98c5-8512cfe17a71"><DocumentWindow Key="C:\Users\Michi\Source\Repos\PsoC\Reaktionstester\ReaktionstesterSlave.cydsn\main.c" Guid="aca1374c-b4cc-4704-98c5-8512cfe17a71" /><DocumentWindow Key="C:\Users\Michi\Source\Repos\PsoC\Reaktionstester\ReaktionstesterSlave.cydsn\TopDesign\TopDesign.cysch" Guid="93cb298c-c597-4a67-b501-74d48ff722d7" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="2849c1a6-ffd8-448a-8250-1f88ab7e8bef" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+<config v="" />
+<AutoUpdate v="true" />
+</CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
+</CyXmlSerializer>
